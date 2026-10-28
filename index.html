@@ -5,44 +5,55 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>James Consultant — AI Automation for Small Business | Halifax, Nova Scotia</title>
 <meta name="description" content="James Consultant helps small businesses in Nova Scotia save time and money with AI automation: consulting, websites, online ordering, chatbots, and practical AI products.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: { extend: {
+    colors: { ink:'#16262F', pine:'#1E3A34', paper:'#FAF8F3', mist:'#EFEAE0', brass:{ DEFAULT:'#A87C2A', dark:'#8A641F' } },
+    fontFamily: { display:['Fraunces','Georgia','serif'], sans:['Inter','system-ui','sans-serif'] }
+  } }
+}
+</script>
 <style>
   body{-webkit-tap-highlight-color:transparent}
-  .tile{transition:transform .15s, box-shadow .15s}
-  .tile:hover{transform:translateY(-3px)}
+  .rowlink{transition:background .15s}
+  .rowlink:hover{background:#fff}
+  .book{aspect-ratio:2/3}
 </style>
 </head>
-<body class="bg-slate-50 text-slate-800">
+<body class="bg-paper text-ink font-sans antialiased">
 
 <!-- Header -->
-<header class="bg-slate-900 text-white sticky top-0 z-10 shadow">
-  <div class="max-w-5xl mx-auto px-5 py-3 flex items-center gap-3">
-    <span class="text-lg font-extrabold tracking-tight">James <span class="text-sky-400">Consultant</span></span>
-    <nav class="ml-auto hidden sm:flex gap-5 text-sm font-semibold text-slate-300">
-      <a href="#services" class="hover:text-white">Services</a>
-      <a href="#products" class="hover:text-white">Products</a>
-      <a href="#work" class="hover:text-white">Work</a>
-      <a href="#downloads" class="hover:text-white">Downloads</a>
-      <a href="#contact" class="hover:text-white">Contact</a>
+<header class="bg-paper/95 backdrop-blur border-b border-ink/10 sticky top-0 z-10">
+  <div class="max-w-5xl mx-auto px-5 py-3.5 flex items-center gap-3">
+    <a href="#" class="font-display text-xl font-bold tracking-tight">James Consultant<span class="text-brass">.</span></a>
+    <nav class="ml-auto hidden sm:flex gap-6 text-sm font-medium text-ink/60">
+      <a href="#services" class="hover:text-ink">Services</a>
+      <a href="#products" class="hover:text-ink">Products</a>
+      <a href="#work" class="hover:text-ink">Work</a>
+      <a href="#downloads" class="hover:text-ink">Downloads</a>
+      <a href="#contact" class="hover:text-ink">Contact</a>
     </nav>
-    <a href="https://ocean1547-ui.github.io/automation-portfolio/card/" class="ml-auto sm:ml-0 bg-sky-600 hover:bg-sky-500 text-white text-sm font-bold px-4 py-2 rounded-full">📇 Digital Card</a>
+    <a href="https://ocean1547-ui.github.io/automation-portfolio/card/" class="ml-auto sm:ml-8 text-sm font-semibold border border-ink/70 rounded-full px-4 py-1.5 hover:bg-ink hover:text-white transition">Digital card</a>
   </div>
 </header>
 
 <!-- Hero -->
 <section class="relative">
-  <img src="assets/halifax.jpg" alt="Halifax harbour" class="w-full h-64 sm:h-80 object-cover">
-  <div class="absolute inset-0 bg-gradient-to-t from-slate-900/85 via-slate-900/40 to-transparent"></div>
+  <img src="assets/halifax.jpg" alt="Halifax harbour" class="w-full h-72 sm:h-96 object-cover">
+  <div class="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/35 to-transparent"></div>
   <div class="absolute inset-x-0 bottom-0">
-    <div class="max-w-5xl mx-auto px-5 pb-6 flex items-end gap-4">
-      <img src="assets/james.jpg" alt="James Song" class="w-24 h-24 sm:w-32 sm:h-32 rounded-3xl object-cover border-4 border-white shadow-2xl hidden xs:block sm:block">
+    <div class="max-w-5xl mx-auto px-5 pb-7 flex items-end gap-5">
+      <img src="assets/james.jpg" alt="James Song" class="w-24 h-24 sm:w-32 sm:h-32 rounded-2xl object-cover border-4 border-white shadow-2xl hidden sm:block">
       <div class="text-white">
-        <h1 class="text-3xl sm:text-4xl font-extrabold leading-tight">AI automation that saves your business time and money.</h1>
-        <p class="text-slate-200 mt-2 max-w-xl text-sm sm:text-base">I'm James Song — an AI automation developer in Halifax, Nova Scotia. Everything I build, sell, and offer lives on this one page.</p>
-        <div class="flex flex-wrap gap-2 mt-4">
-          <a href="https://www.upwork.com/freelancers/~01bada3b205b6b7b9c" class="bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-bold px-4 py-2.5 rounded-full shadow">💚 Hire me on Upwork</a>
-          <a href="tel:+19026353585" class="bg-white/10 hover:bg-white/20 border border-white/40 text-white text-sm font-bold px-4 py-2.5 rounded-full">📞 +1-902-635-3585</a>
-          <a href="mailto:ocean1547@gmail.com" class="bg-white/10 hover:bg-white/20 border border-white/40 text-white text-sm font-bold px-4 py-2.5 rounded-full">✉️ Email</a>
+        <h1 class="font-display text-3xl sm:text-[2.6rem] font-semibold leading-[1.12]">AI automation that saves your business time and money.</h1>
+        <p class="text-white/80 mt-2.5 max-w-xl text-sm sm:text-base">I'm James Song — an AI automation developer in Halifax, Nova Scotia. Everything I build, sell, and offer lives on this one page.</p>
+        <div class="flex flex-wrap gap-2.5 mt-5">
+          <a href="https://www.upwork.com/freelancers/~01bada3b205b6b7b9c" class="bg-brass hover:bg-brass-dark text-white text-sm font-semibold px-5 py-2.5 rounded-full shadow">Hire me on Upwork</a>
+          <a href="tel:+19026353585" class="border border-white/50 hover:bg-white/10 text-white text-sm font-semibold px-5 py-2.5 rounded-full">+1 902-635-3585</a>
         </div>
       </div>
     </div>
@@ -52,152 +63,165 @@
 <main class="max-w-5xl mx-auto px-5">
 
   <!-- Services -->
-  <section id="services" class="pt-12">
-    <h2 class="text-2xl font-extrabold text-slate-900">Services</h2>
-    <p class="text-slate-500 mt-1 text-sm">Practical automation for small businesses — priced so big firms can't follow.</p>
-    <div class="grid sm:grid-cols-3 gap-4 mt-5">
-      <div class="tile bg-white rounded-2xl shadow p-5 border-t-4 border-sky-600">
-        <p class="text-2xl">🤖</p>
-        <h3 class="font-bold mt-2">AI Automation Consulting</h3>
-        <p class="text-sm text-slate-600 mt-1 leading-relaxed">Excel/CSV cleanup, web scraping, email automation, and custom Python tools that remove hours of repetitive work every week.</p>
-        <a href="https://www.upwork.com/freelancers/~01bada3b205b6b7b9c" class="inline-block mt-3 text-sm font-bold text-sky-700">Book on Upwork →</a>
+  <section id="services" class="pt-14">
+    <h2 class="font-display text-[1.7rem] font-semibold">Services</h2>
+    <p class="text-ink/55 mt-1 text-[15px]">Practical automation for small businesses — priced so big firms can't follow.</p>
+    <div class="grid sm:grid-cols-3 gap-8 mt-7">
+      <div class="border-t-2 border-ink pt-5">
+        <svg class="w-7 h-7 text-brass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9l3 3-3 3"/><path d="M12.5 15H17"/></svg>
+        <h3 class="font-display font-semibold text-lg mt-3">AI Automation Consulting</h3>
+        <p class="text-sm text-ink/65 mt-1.5 leading-relaxed">Excel/CSV cleanup, web scraping, email automation, and custom Python tools that remove hours of repetitive work every week.</p>
+        <a href="https://www.upwork.com/freelancers/~01bada3b205b6b7b9c" class="inline-block mt-3.5 text-sm font-semibold text-brass-dark underline decoration-brass/40 underline-offset-4 hover:decoration-brass">Book on Upwork →</a>
       </div>
-      <div class="tile bg-white rounded-2xl shadow p-5 border-t-4 border-sky-600">
-        <p class="text-2xl">🏪</p>
-        <h3 class="font-bold mt-2">Small-Business Bundle</h3>
-        <p class="text-sm text-slate-600 mt-1 leading-relaxed">A simple website + commission-free pickup ordering (PickupZero) + an AI chatbot that answers your customers — one monthly plan, Korean &amp; English support.</p>
-        <a href="mailto:ocean1547@gmail.com" class="inline-block mt-3 text-sm font-bold text-sky-700">Ask for a quote →</a>
+      <div class="border-t-2 border-ink pt-5">
+        <svg class="w-7 h-7 text-brass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14l-1.15 11.1a2 2 0 0 1-2 1.9H8.15a2 2 0 0 1-2-1.9L5 8z"/><path d="M8.5 10.5V6.5a3.5 3.5 0 0 1 7 0v4"/></svg>
+        <h3 class="font-display font-semibold text-lg mt-3">Small-Business Bundle</h3>
+        <p class="text-sm text-ink/65 mt-1.5 leading-relaxed">A simple website + commission-free pickup ordering (PickupZero) + an AI chatbot that answers your customers — one monthly plan, Korean &amp; English support.</p>
+        <a href="mailto:ocean1547@gmail.com" class="inline-block mt-3.5 text-sm font-semibold text-brass-dark underline decoration-brass/40 underline-offset-4 hover:decoration-brass">Ask for a quote →</a>
       </div>
-      <div class="tile bg-white rounded-2xl shadow p-5 border-t-4 border-sky-600">
-        <p class="text-2xl">🛡️</p>
-        <h3 class="font-bold mt-2">Home Cyber Security</h3>
-        <p class="text-sm text-slate-600 mt-1 leading-relaxed">Security reports, scam &amp; kid-safety protection for your home — central monitoring, daily reports, monthly device health checks. $19.99/mo, no contract.</p>
-        <a href="mailto:ocean1547@gmail.com" class="inline-block mt-3 text-sm font-bold text-sky-700">Get protected →</a>
+      <div class="border-t-2 border-ink pt-5">
+        <svg class="w-7 h-7 text-brass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 2.8V11c0 4.6-2.9 7.6-7 9.2C7.9 18.6 5 15.6 5 11V5.8L12 3z"/><path d="M9 11.8l2.1 2.1 3.9-4"/></svg>
+        <h3 class="font-display font-semibold text-lg mt-3">Home Cyber Security</h3>
+        <p class="text-sm text-ink/65 mt-1.5 leading-relaxed">Security reports, scam &amp; kid-safety protection for your home — central monitoring, daily reports, monthly device health checks. $19.99/mo, no contract.</p>
+        <a href="mailto:ocean1547@gmail.com" class="inline-block mt-3.5 text-sm font-semibold text-brass-dark underline decoration-brass/40 underline-offset-4 hover:decoration-brass">Get protected →</a>
       </div>
     </div>
   </section>
 
   <!-- Products -->
-  <section id="products" class="pt-12">
-    <h2 class="text-2xl font-extrabold text-slate-900">Products</h2>
-    <p class="text-slate-500 mt-1 text-sm">Built and run by James Consultant.</p>
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-5">
-      <a href="https://maplevita.shop/" class="tile block bg-white rounded-2xl shadow p-5">
-        <div class="flex items-center justify-between"><p class="text-2xl">🍁</p><span class="text-[11px] font-extrabold bg-emerald-100 text-emerald-700 px-2 py-1 rounded-full">LIVE</span></div>
-        <h3 class="font-bold mt-2">MapleVita</h3>
-        <p class="text-sm text-slate-600 mt-1">Canadian health foods shipped direct to Korea — 55+ products, free shipping.</p>
-      </a>
-      <div class="tile bg-white rounded-2xl shadow p-5">
-        <div class="flex items-center justify-between"><p class="text-2xl">🧠</p><span class="text-[11px] font-extrabold bg-amber-100 text-amber-700 px-2 py-1 rounded-full">NOV 2026</span></div>
-        <h3 class="font-bold mt-2">PocketAI</h3>
-        <p class="text-sm text-slate-600 mt-1">A personal AI assistant with 60+ public-data sources and smart model routing — free tier with your own key.</p>
+  <section id="products" class="mt-16 -mx-5 px-5 py-12 bg-mist">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="font-display text-[1.7rem] font-semibold">Products</h2>
+      <p class="text-ink/55 mt-1 text-[15px]">Built and run by James Consultant.</p>
+      <div class="mt-6 divide-y divide-ink/10 border-y border-ink/10">
+        <a href="https://maplevita.shop/" class="rowlink flex items-baseline gap-4 px-3 sm:px-4 py-4">
+          <h3 class="font-display font-semibold text-lg w-44 shrink-0">MapleVita</h3>
+          <p class="text-sm text-ink/65 flex-1">Canadian health foods shipped direct to Korea — 55+ products, free shipping.</p>
+          <span class="text-xs font-semibold whitespace-nowrap"><span class="inline-block w-2 h-2 rounded-full bg-emerald-600 mr-1.5 align-middle"></span>Live</span>
+        </a>
+        <div class="flex items-baseline gap-4 px-3 sm:px-4 py-4">
+          <h3 class="font-display font-semibold text-lg w-44 shrink-0">PocketAI</h3>
+          <p class="text-sm text-ink/65 flex-1">A personal AI assistant with 60+ public-data sources and smart model routing — free tier with your own key.</p>
+          <span class="text-xs font-semibold text-ink/50 whitespace-nowrap"><span class="inline-block w-2 h-2 rounded-full bg-amber-500 mr-1.5 align-middle"></span>Nov 2026</span>
+        </div>
+        <div class="flex items-baseline gap-4 px-3 sm:px-4 py-4">
+          <h3 class="font-display font-semibold text-lg w-44 shrink-0">PingPay</h3>
+          <p class="text-sm text-ink/65 flex-1">Card-transaction alerts that catch mistakes and fraud early — and file themselves into your household ledger.</p>
+          <span class="text-xs font-semibold text-ink/50 whitespace-nowrap"><span class="inline-block w-2 h-2 rounded-full bg-amber-500 mr-1.5 align-middle"></span>Nov 2026</span>
+        </div>
+        <div class="flex items-baseline gap-4 px-3 sm:px-4 py-4">
+          <h3 class="font-display font-semibold text-lg w-44 shrink-0">NS Pros</h3>
+          <p class="text-sm text-ink/65 flex-1">Find trusted local pros in Nova Scotia — plumbers, electricians, movers and more. One request, one pro, no shared leads.</p>
+          <span class="text-xs font-semibold text-ink/50 whitespace-nowrap"><span class="inline-block w-2 h-2 rounded-full bg-amber-500 mr-1.5 align-middle"></span>Nov 2026</span>
+        </div>
+        <div class="flex items-baseline gap-4 px-3 sm:px-4 py-4">
+          <h3 class="font-display font-semibold text-lg w-44 shrink-0">EduReport</h3>
+          <p class="text-sm text-ink/65 flex-1">Counselling reports for study &amp; immigration agencies — 16,000+ Canadian schools with housing and neighbourhood data.</p>
+          <span class="text-xs font-semibold text-ink/50 whitespace-nowrap"><span class="inline-block w-2 h-2 rounded-full bg-amber-500 mr-1.5 align-middle"></span>Nov 2026</span>
+        </div>
+        <a href="https://oceanwave268.gumroad.com" class="rowlink flex items-baseline gap-4 px-3 sm:px-4 py-4">
+          <h3 class="font-display font-semibold text-lg w-44 shrink-0">Automation Templates</h3>
+          <p class="text-sm text-ink/65 flex-1">31 ready-to-use Python automation templates on Gumroad — $4.99 each, bundle $9.99.</p>
+          <span class="text-xs font-semibold whitespace-nowrap"><span class="inline-block w-2 h-2 rounded-full bg-emerald-600 mr-1.5 align-middle"></span>Live</span>
+        </a>
       </div>
-      <div class="tile bg-white rounded-2xl shadow p-5">
-        <div class="flex items-center justify-between"><p class="text-2xl">🔔</p><span class="text-[11px] font-extrabold bg-amber-100 text-amber-700 px-2 py-1 rounded-full">NOV 2026</span></div>
-        <h3 class="font-bold mt-2">PingPay</h3>
-        <p class="text-sm text-slate-600 mt-1">Card-transaction alerts that catch mistakes and fraud early — and file themselves into your household ledger.</p>
-      </div>
-      <div class="tile bg-white rounded-2xl shadow p-5">
-        <div class="flex items-center justify-between"><p class="text-2xl">🔧</p><span class="text-[11px] font-extrabold bg-amber-100 text-amber-700 px-2 py-1 rounded-full">NOV 2026</span></div>
-        <h3 class="font-bold mt-2">NS Pros</h3>
-        <p class="text-sm text-slate-600 mt-1">Find trusted local pros in Nova Scotia — plumbers, electricians, movers and more. One request, one pro, no shared leads.</p>
-      </div>
-      <div class="tile bg-white rounded-2xl shadow p-5">
-        <div class="flex items-center justify-between"><p class="text-2xl">🎓</p><span class="text-[11px] font-extrabold bg-amber-100 text-amber-700 px-2 py-1 rounded-full">NOV 2026</span></div>
-        <h3 class="font-bold mt-2">Immigration Reporter</h3>
-        <p class="text-sm text-slate-600 mt-1">Counselling reports for study &amp; immigration agencies — 16,000+ Canadian schools with housing and neighbourhood data.</p>
-      </div>
-      <a href="https://oceanwave268.gumroad.com" class="tile block bg-white rounded-2xl shadow p-5">
-        <div class="flex items-center justify-between"><p class="text-2xl">⚡</p><span class="text-[11px] font-extrabold bg-emerald-100 text-emerald-700 px-2 py-1 rounded-full">LIVE</span></div>
-        <h3 class="font-bold mt-2">Automation Templates</h3>
-        <p class="text-sm text-slate-600 mt-1">31 ready-to-use Python automation templates on Gumroad — $4.99 each, bundle $9.99.</p>
-      </a>
     </div>
   </section>
 
   <!-- Books -->
-  <section id="books" class="pt-12">
-    <h2 class="text-2xl font-extrabold text-slate-900">Books — Korean Folktales in English</h2>
-    <p class="text-slate-500 mt-1 text-sm">English picture books I published on Amazon Kindle — classic Korean folktales retold for young readers.</p>
-    <div class="grid sm:grid-cols-3 gap-4 mt-5">
-      <a href="https://www.amazon.com/s?k=Kongjwi+and+Patjwi" class="tile block bg-white rounded-2xl shadow p-5">
-        <div class="flex items-center justify-between"><p class="text-2xl">👧</p><span class="text-[11px] font-extrabold bg-emerald-100 text-emerald-700 px-2 py-1 rounded-full">KINDLE</span></div>
-        <h3 class="font-bold mt-2">Kongjwi and Patjwi</h3>
-        <p class="text-sm text-slate-600 mt-1">The Korean Cinderella — kindness, hard work, and one little flower shoe.</p>
+  <section id="books" class="pt-14">
+    <h2 class="font-display text-[1.7rem] font-semibold">Books — Korean Folktales in English</h2>
+    <p class="text-ink/55 mt-1 text-[15px]">English picture books I published on Amazon Kindle — classic Korean folktales retold for young readers.</p>
+    <div class="grid sm:grid-cols-3 gap-8 mt-8">
+      <a href="https://www.amazon.com/s?k=Kongjwi+and+Patjwi" class="group block">
+        <div class="book bg-pine text-paper rounded-r-md rounded-l-sm shadow-md p-5 flex flex-col border-l-4 border-black/25 group-hover:shadow-xl transition">
+          <p class="text-[11px] tracking-[0.18em] uppercase text-paper/60">Korean folktale</p>
+          <p class="font-display text-[1.55rem] leading-snug font-semibold mt-3">Kongjwi<br>and Patjwi</p>
+          <p class="text-xs text-paper/70 mt-auto">Retold by James Song</p>
+        </div>
+        <p class="text-sm text-ink/65 mt-3.5 leading-relaxed">The Korean Cinderella — kindness, hard work, and one little flower shoe.</p>
+        <span class="text-sm font-semibold text-brass-dark underline decoration-brass/40 underline-offset-4">On Amazon →</span>
       </a>
-      <a href="https://www.amazon.com/s?k=Sunny+and+Moony+picture+book" class="tile block bg-white rounded-2xl shadow p-5">
-        <div class="flex items-center justify-between"><p class="text-2xl">🌞</p><span class="text-[11px] font-extrabold bg-emerald-100 text-emerald-700 px-2 py-1 rounded-full">KINDLE</span></div>
-        <h3 class="font-bold mt-2">Sunny and Moony</h3>
-        <p class="text-sm text-slate-600 mt-1">The brother and sister who became the sun and the moon — Korea's beloved origin tale.</p>
+      <a href="https://www.amazon.com/s?k=Sunny+and+Moony+picture+book" class="group block">
+        <div class="book bg-[#8A4B2A] text-paper rounded-r-md rounded-l-sm shadow-md p-5 flex flex-col border-l-4 border-black/25 group-hover:shadow-xl transition">
+          <p class="text-[11px] tracking-[0.18em] uppercase text-paper/60">Korean folktale</p>
+          <p class="font-display text-[1.55rem] leading-snug font-semibold mt-3">Sunny<br>and Moony</p>
+          <p class="text-xs text-paper/70 mt-auto">Retold by James Song</p>
+        </div>
+        <p class="text-sm text-ink/65 mt-3.5 leading-relaxed">The brother and sister who became the sun and the moon — Korea's beloved origin tale.</p>
+        <span class="text-sm font-semibold text-brass-dark underline decoration-brass/40 underline-offset-4">On Amazon →</span>
       </a>
-      <a href="https://www.amazon.com/s?k=The+Tiger+and+the+Dried+Persimmon+picture+book" class="tile block bg-white rounded-2xl shadow p-5">
-        <div class="flex items-center justify-between"><p class="text-2xl">🐯</p><span class="text-[11px] font-extrabold bg-emerald-100 text-emerald-700 px-2 py-1 rounded-full">KINDLE</span></div>
-        <h3 class="font-bold mt-2">The Tiger and the Dried Persimmon</h3>
-        <p class="text-sm text-slate-600 mt-1">A hungry tiger, a crying baby, and the "fiercest beast" that never existed — a funny favorite.</p>
+      <a href="https://www.amazon.com/s?k=The+Tiger+and+the+Dried+Persimmon+picture+book" class="group block">
+        <div class="book bg-[#31435C] text-paper rounded-r-md rounded-l-sm shadow-md p-5 flex flex-col border-l-4 border-black/25 group-hover:shadow-xl transition">
+          <p class="text-[11px] tracking-[0.18em] uppercase text-paper/60">Korean folktale</p>
+          <p class="font-display text-[1.55rem] leading-snug font-semibold mt-3">The Tiger and the Dried Persimmon</p>
+          <p class="text-xs text-paper/70 mt-auto">Retold by James Song</p>
+        </div>
+        <p class="text-sm text-ink/65 mt-3.5 leading-relaxed">A hungry tiger, a crying baby, and the "fiercest beast" that never existed — a funny favorite.</p>
+        <span class="text-sm font-semibold text-brass-dark underline decoration-brass/40 underline-offset-4">On Amazon →</span>
       </a>
     </div>
   </section>
 
   <!-- Work -->
-  <section id="work" class="pt-12">
-    <h2 class="text-2xl font-extrabold text-slate-900">Work &amp; Portfolio</h2>
-    <div class="grid sm:grid-cols-3 gap-4 mt-5">
-      <a href="https://ocean1547-ui.github.io/automation-portfolio/" class="tile block bg-slate-900 text-white rounded-2xl shadow p-5">
-        <p class="text-2xl">💼</p>
-        <h3 class="font-bold mt-2">Automation Portfolio</h3>
-        <p class="text-sm text-slate-300 mt-1">Live demos: Excel cleaner, bulk email sender, dashboard, file renamer and more.</p>
-      </a>
-      <a href="https://github.com/ocean1547-ui" class="tile block bg-slate-900 text-white rounded-2xl shadow p-5">
-        <p class="text-2xl">🐙</p>
-        <h3 class="font-bold mt-2">GitHub</h3>
-        <p class="text-sm text-slate-300 mt-1">Open projects and code — automation tools, apps, and experiments.</p>
-      </a>
-      <a href="https://www.linkedin.com/in/seungjae-song-0678bb134" class="tile block bg-slate-900 text-white rounded-2xl shadow p-5">
-        <p class="text-2xl">🔗</p>
-        <h3 class="font-bold mt-2">LinkedIn</h3>
-        <p class="text-sm text-slate-300 mt-1">Background and experience — from aviation electronics to AI programming.</p>
-      </a>
+  <section id="work" class="mt-16 -mx-5 px-5 py-12 bg-ink text-white">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="font-display text-[1.7rem] font-semibold">Work &amp; Portfolio</h2>
+      <div class="grid sm:grid-cols-3 gap-8 mt-7">
+        <a href="https://ocean1547-ui.github.io/automation-portfolio/" class="group block">
+          <h3 class="font-display font-semibold text-lg group-hover:text-brass transition">Automation Portfolio <span aria-hidden="true">→</span></h3>
+          <p class="text-sm text-white/60 mt-1.5 leading-relaxed">Live demos: Excel cleaner, bulk email sender, dashboard, file renamer and more.</p>
+        </a>
+        <a href="https://github.com/ocean1547-ui" class="group block">
+          <h3 class="font-display font-semibold text-lg group-hover:text-brass transition">GitHub <span aria-hidden="true">→</span></h3>
+          <p class="text-sm text-white/60 mt-1.5 leading-relaxed">Open projects and code — automation tools, apps, and experiments.</p>
+        </a>
+        <a href="https://www.linkedin.com/in/seungjae-song-0678bb134" class="group block">
+          <h3 class="font-display font-semibold text-lg group-hover:text-brass transition">LinkedIn <span aria-hidden="true">→</span></h3>
+          <p class="text-sm text-white/60 mt-1.5 leading-relaxed">Background and experience — from aviation electronics to AI programming.</p>
+        </a>
+      </div>
     </div>
   </section>
 
   <!-- Downloads -->
-  <section id="downloads" class="pt-12">
-    <h2 class="text-2xl font-extrabold text-slate-900">Downloads</h2>
-    <div class="space-y-2.5 mt-5">
-      <a href="https://ocean1547-ui.github.io/automation-portfolio/resume/Seungjae-Song-Resume.pdf" class="tile flex items-center gap-3 bg-white rounded-2xl px-4 py-3.5 text-sm font-semibold shadow">
-        <span class="text-lg">📄</span><span class="flex-1">Resume — James Song (PDF)</span><span class="text-slate-300">›</span>
+  <section id="downloads" class="pt-14">
+    <h2 class="font-display text-[1.7rem] font-semibold">Downloads</h2>
+    <div class="mt-5 divide-y divide-ink/10 border-y border-ink/10">
+      <a href="https://ocean1547-ui.github.io/automation-portfolio/resume/Seungjae-Song-Resume.pdf" class="rowlink flex items-center gap-4 px-3 sm:px-4 py-4">
+        <span class="font-mono text-[11px] font-semibold bg-ink text-white px-2 py-1 rounded">PDF</span>
+        <span class="flex-1 text-[15px] font-medium">Resume — James Song</span><span class="text-ink/35">→</span>
       </a>
-      <a href="https://ocean1547-ui.github.io/automation-portfolio/card/contact.vcf" class="tile flex items-center gap-3 bg-white rounded-2xl px-4 py-3.5 text-sm font-semibold shadow">
-        <span class="text-lg">📇</span><span class="flex-1">Contact card (vCard) — add me to your phone</span><span class="text-slate-300">›</span>
+      <a href="https://ocean1547-ui.github.io/automation-portfolio/card/contact.vcf" class="rowlink flex items-center gap-4 px-3 sm:px-4 py-4">
+        <span class="font-mono text-[11px] font-semibold bg-ink text-white px-2 py-1 rounded">VCF</span>
+        <span class="flex-1 text-[15px] font-medium">Contact card — add me to your phone</span><span class="text-ink/35">→</span>
       </a>
-      <a href="https://oceanwave268.gumroad.com" class="tile flex items-center gap-3 bg-white rounded-2xl px-4 py-3.5 text-sm font-semibold shadow">
-        <span class="text-lg">🛒</span><span class="flex-1">Automation templates — Gumroad store</span><span class="text-slate-300">›</span>
+      <a href="https://oceanwave268.gumroad.com" class="rowlink flex items-center gap-4 px-3 sm:px-4 py-4">
+        <span class="font-mono text-[11px] font-semibold bg-ink text-white px-2 py-1 rounded">WEB</span>
+        <span class="flex-1 text-[15px] font-medium">Automation templates — Gumroad store</span><span class="text-ink/35">→</span>
       </a>
     </div>
-  </section>
-
-  <!-- Content -->
-  <section class="pt-12">
-    <h2 class="text-2xl font-extrabold text-slate-900">Content</h2>
-    <div class="grid grid-cols-3 gap-2.5 mt-5">
-      <a href="https://canadasecondlife.blogspot.com" class="tile bg-white rounded-2xl shadow py-4 text-center text-sm font-bold">✍️ Blog</a>
-      <a href="https://www.youtube.com/@ocean1547" class="tile bg-white rounded-2xl shadow py-4 text-center text-sm font-bold">▶️ YouTube</a>
-      <a href="https://www.instagram.com/ocean1547" class="tile bg-white rounded-2xl shadow py-4 text-center text-sm font-bold">📸 Instagram</a>
-    </div>
+    <p class="mt-8 text-[15px] text-ink/60">Writing and channels:
+      <a href="https://canadasecondlife.blogspot.com" class="font-semibold text-ink underline decoration-brass/50 underline-offset-4 hover:decoration-brass">Blog</a> ·
+      <a href="https://www.youtube.com/@ocean1547" class="font-semibold text-ink underline decoration-brass/50 underline-offset-4 hover:decoration-brass">YouTube</a> ·
+      <a href="https://www.instagram.com/ocean1547" class="font-semibold text-ink underline decoration-brass/50 underline-offset-4 hover:decoration-brass">Instagram</a>
+    </p>
   </section>
 
   <!-- Contact -->
-  <section id="contact" class="pt-12 pb-14">
-    <div class="bg-slate-900 text-white rounded-3xl p-6 sm:p-8 text-center shadow-xl">
-      <h2 class="text-2xl font-extrabold">Let's save your business some hours.</h2>
-      <p class="text-slate-300 text-sm mt-2">Tell me the repetitive task you hate most — I'll tell you honestly if automation can kill it.</p>
-      <div class="flex flex-wrap justify-center gap-2 mt-5">
-        <a href="tel:+19026353585" class="bg-sky-600 hover:bg-sky-500 text-sm font-bold px-4 py-2.5 rounded-full">📞 +1-902-635-3585</a>
-        <a href="mailto:ocean1547@gmail.com" class="bg-white/10 hover:bg-white/20 border border-white/30 text-sm font-bold px-4 py-2.5 rounded-full">✉️ ocean1547@gmail.com</a>
-        <a href="https://ocean1547-ui.github.io/automation-portfolio/card/" class="bg-white/10 hover:bg-white/20 border border-white/30 text-sm font-bold px-4 py-2.5 rounded-full">📇 My digital card</a>
+  <section id="contact" class="pt-14 pb-16">
+    <div class="border-t-2 border-ink pt-9 sm:flex items-end gap-8">
+      <div class="flex-1">
+        <h2 class="font-display text-3xl font-semibold leading-snug">Let's save your business some hours.</h2>
+        <p class="text-ink/60 text-[15px] mt-2.5 max-w-lg">Tell me the repetitive task you hate most — I'll tell you honestly if automation can kill it.</p>
       </div>
-      <p class="text-slate-500 text-xs mt-6">James Consultant · Halifax, Nova Scotia, Canada</p>
+      <div class="mt-6 sm:mt-0 flex flex-col items-start gap-2.5 text-[15px]">
+        <a href="tel:+19026353585" class="font-semibold underline decoration-brass/50 underline-offset-4 hover:decoration-brass">+1 902-635-3585</a>
+        <a href="mailto:ocean1547@gmail.com" class="font-semibold underline decoration-brass/50 underline-offset-4 hover:decoration-brass">ocean1547@gmail.com</a>
+        <a href="https://ocean1547-ui.github.io/automation-portfolio/card/" class="font-semibold underline decoration-brass/50 underline-offset-4 hover:decoration-brass">My digital card →</a>
+      </div>
     </div>
+    <p class="text-ink/40 text-xs mt-12">James Consultant · Halifax, Nova Scotia, Canada</p>
   </section>
 </main>
 </body>
