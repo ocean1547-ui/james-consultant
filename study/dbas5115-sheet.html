@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DBAS 5115 Code Sheet — Practices 1–9 | Study Notes — James Consultant</title>
+<meta name="description" content="DBAS 5115 code sheet for Practices 1–9: pandas, matplotlib, file formats, APIs, web scraping, and PostgreSQL from Python.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: { extend: {
+    colors: { ink:'#16262F', pine:'#1E3A34', paper:'#FAF8F3', mist:'#EFEAE0', brass:{ DEFAULT:'#A87C2A', dark:'#8A641F' } },
+    fontFamily: { display:['Fraunces','Georgia','serif'], sans:['Inter','system-ui','sans-serif'] }
+  } }
+}
+</script>
+<style>
+  body{-webkit-tap-highlight-color:transparent}
+  .sheet{font-size:15.5px;line-height:1.75;color:#16262F}
+  .sheet h1{font-family:Fraunces,Georgia,serif;font-size:1.9rem;font-weight:600;line-height:1.25;margin:0 0 1.2rem}
+  .sheet h2{font-family:Fraunces,Georgia,serif;font-size:1.4rem;font-weight:600;line-height:1.3;margin:2.6rem 0 0.9rem;padding-top:1.6rem;border-top:1px solid rgba(22,38,47,.12)}
+  .sheet h2:first-of-type{border-top:none;padding-top:0}
+  .sheet h3{font-size:1.08rem;font-weight:700;margin:1.9rem 0 0.6rem}
+  .sheet p{margin:0.7rem 0}
+  .sheet ul{list-style:disc;padding-left:1.5rem;margin:0.7rem 0}
+  .sheet ol{list-style:decimal;padding-left:1.5rem;margin:0.7rem 0}
+  .sheet li{margin:0.3rem 0}
+  .sheet li>ul,.sheet li>ol{margin:0.3rem 0}
+  .sheet a{color:#8A641F;font-weight:600;text-decoration:underline;text-decoration-color:rgba(168,124,42,.45);text-underline-offset:3px}
+  .sheet a:hover{text-decoration-color:#A87C2A}
+  .sheet strong{font-weight:700}
+  .sheet hr{border:none;border-top:1px solid rgba(22,38,47,.12);margin:2.2rem 0}
+  .sheet code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.88em;background:#EFEAE0;padding:.12em .35em;border-radius:4px}
+  .sheet pre{background:#16262F;color:#EDEAE2;padding:1rem 1.1rem;border-radius:8px;overflow-x:auto;margin:1rem 0;line-height:1.55}
+  .sheet pre code{background:transparent;padding:0;font-size:.85rem;color:inherit}
+  .sheet table{border-collapse:collapse;width:100%;margin:1rem 0;font-size:.92rem;line-height:1.5}
+  .sheet th,.sheet td{border:1px solid rgba(22,38,47,.18);padding:.45rem .7rem;text-align:left;vertical-align:top}
+  .sheet th{background:#EFEAE0;font-weight:700}
+  .sheet blockquote{border-left:3px solid #A87C2A;padding-left:1rem;margin:1rem 0;color:rgba(22,38,47,.75)}
+  .sheet img{max-width:100%}
+</style>
+</head>
+<body class="bg-paper text-ink font-sans antialiased">
+
+<!-- Header -->
+<header class="bg-paper/95 backdrop-blur border-b border-ink/10 sticky top-0 z-10">
+  <div class="max-w-5xl mx-auto px-5 py-3.5 flex items-center gap-3">
+    <a href="../" class="text-sm font-semibold text-ink/60 hover:text-ink">← James Consultant</a>
+    <a href="./" class="ml-auto text-sm font-semibold border border-ink/70 rounded-full px-4 py-1.5 hover:bg-ink hover:text-white transition">Study Notes</a>
+  </div>
+</header>
+
+<main class="max-w-5xl mx-auto px-5">
+  <article class="sheet max-w-3xl pt-12 pb-4">
+<h1>📊 DBAS 5115 Data &amp; PostgreSQL Practice 1~9_code Sheet</h1>
+<h2>Practice 1 — Markdown &amp; Git 제출 (Ex1)</h2>
+<p>노트북 설명 셀과 README 작성용 문법 + 과제 제출 명령어입니다.</p>
+<pre><code class="language-markdown"># 큰 제목
+## 중간 제목
+### 작은 제목
+
+**굵게** / *기울임* / `인라인 코드`
+
+- 순서 없는 목록
+- 항목 2
+
+1. 순서 있는 목록
+2. 항목 2
+
+[링크 텍스트](https://주소.com)
+![이미지 설명](이미지파일.png)
+</code></pre>
+<pre><code class="language-bash"># VS Code 터미널(bash)에 순서대로 입력
+git add .                              # 1. 변경된 파일 추가
+git commit -m &quot;작업 내용 설명 적기&quot;      # 2. 이름표 붙이기
+git push                               # 3. 깃허브로 전송
+</code></pre>
+<h2>Practice 2 — DataFrame 기초 &amp; 시각화 (Ex2)</h2>
+<pre><code class="language-python">import pandas as pd
+
+# 2차원 배열로 DataFrame 만들기
+data = [['홍길동', 25, '서울'],
+        ['김철수', 30, '부산']]
+df = pd.DataFrame(data, columns=['이름', '나이', '도시'])
+
+# 데이터 탐색 4종 세트
+display(df.head())                    # 위에서 5줄 미리보기
+df.info()                             # 형식, 결측치, 개수 확인
+display(df.describe(include='all'))   # 기초 통계
+df['컬럼명'].value_counts()            # 항목별 개수 세기
+</code></pre>
+<p>💡 숫자 깨짐 방지 (과학적 표기법 1.23e+09 → 콤마 표시)</p>
+<pre><code class="language-python">pd.options.display.float_format = '{:,.2f}'.format
+</code></pre>
+<pre><code class="language-python">import matplotlib.pyplot as plt
+
+plt.figure(figsize=(10, 6))  # 차트 크기
+
+# 막대그래프 (Top 5 GDP 예시)
+plt.bar(top_5['Country'], top_5['2025'], color='forestgreen')
+
+plt.title('Top 5 Countries for GDP in 2025')
+plt.xlabel('Country')
+plt.ylabel('GDP ($)')
+
+plt.xticks(rotation=45)  # X축 글자 대각선 회전 (겹침 방지)
+plt.tight_layout()       # 여백 자동 최적화
+plt.show()               # 출력 (필수!)
+</code></pre>
+<h2>Practice 3 — Pandas 조작 (Ex3)</h2>
+<p><a href="https://pandas.pydata.org/docs/user_guide/10min.html">Pandas 10분 튜토리얼</a> 실습용 핵심 코드입니다.</p>
+<pre><code class="language-python"># 결측치 처리
+df.isnull().sum()   # 컬럼별 빈칸 개수
+df_clean = df.dropna()    # 빈칸 있는 행 삭제
+df_filled = df.fillna(0)  # 빈칸을 0으로 채우기
+
+# 그룹별 집계
+df.groupby('컬럼명')['숫자컬럼'].mean()
+df.groupby('컬럼명')['숫자컬럼'].agg(['mean', 'max', 'min', 'count'])
+
+# 정렬 및 추출 (GDP 상위 5개국 예시)
+df_sorted = df_csv.sort_values(by='2025', ascending=False)
+top_5 = df_sorted.head(5)
+
+# 기초 통계
+lengths = df_api['length']
+print(f&quot;최대: {lengths.max()}, 최소: {lengths.min()}, 평균: {lengths.mean():.1f}&quot;)
+</code></pre>
+<h2>Practice 4 — 플랫 파일 읽기 (Ex4)</h2>
+<pre><code class="language-python">import pandas as pd
+
+# CSV 기본
+df = pd.read_csv('파일명.csv')
+
+# UnicodeDecodeError 발생 시
+df = pd.read_csv('파일명.csv', encoding='cp949')   # 한글 윈도우용
+df = pd.read_csv('파일명.csv', encoding='latin1')   # 영문/기타
+
+# 고정폭 플랫 파일 (컬럼 너비가 고정된 텍스트)
+df = pd.read_fwf('파일명.txt')
+</code></pre>
+<h2>Practice 5 — 바이너리 &amp; 이미지 읽기 (Ex5)</h2>
+<pre><code class="language-python">import pandas as pd
+from PIL import Image
+import numpy as np
+import matplotlib.pyplot as plt
+
+# 바이너리 데이터 파일
+df = pd.read_csv('IBM.data', header=None)
+
+# 이미지 → NumPy 배열
+img = Image.open('이미지파일.png')
+img_array = np.array(img)
+print(img_array.shape)  # (높이, 너비, 색상채널)
+
+plt.imshow(img_array)
+plt.axis('off')
+plt.show()
+</code></pre>
+<h2>Practice 6 — XML &amp; JSON 파일 읽기 (Ex6)</h2>
+<pre><code class="language-python">import pandas as pd
+
+df_xml = pd.read_xml('파일명.xml')
+df_json = pd.read_json('파일명.json')
+</code></pre>
+<h2>Practice 7 — API 데이터 (Ex7)</h2>
+<pre><code class="language-python">import pandas as pd
+import requests
+
+# 기본: JSON 응답 → DataFrame
+api_url = &quot;https://api.domain.com/data?per_page=200&quot;
+response = requests.get(api_url)
+df_api = pd.DataFrame(response.json())
+
+# 페이징 처리 (데이터가 여러 페이지에 나뉜 경우)
+all_data = []
+page = 1
+while True:
+    url = f&quot;https://api.domain.com/data?page={page}&amp;per_page=200&quot;
+    data = requests.get(url).json()
+    if not data:
+        break
+    all_data.extend(data)
+    page += 1
+df_api = pd.DataFrame(all_data)
+</code></pre>
+<h2>Practice 8 — 웹 스크래핑 (Ex8)</h2>
+<p>A. 표 긁어오기 (간단)</p>
+<pre><code class="language-python">import pandas as pd
+
+tables = pd.read_html(&quot;https://www.worldometers.info/...&quot;)
+df_web = tables[0]  # 첫 번째 표가 보통 메인 데이터
+</code></pre>
+<p>B. BeautifulSoup (정적 페이지)</p>
+<pre><code class="language-python">import requests
+from bs4 import BeautifulSoup
+import pandas as pd
+
+soup = BeautifulSoup(requests.get(&quot;https://웹사이트주소.com&quot;).text, 'html.parser')
+rows = soup.find_all('tr')
+data = [[cell.text.strip() for cell in row.find_all(['th', 'td'])]
+        for row in rows]
+df_web = pd.DataFrame(data[1:], columns=data[0])
+</code></pre>
+<p>C. Selenium (동적 페이지)</p>
+<pre><code class="language-python">from selenium import webdriver
+from selenium.webdriver.common.by import By
+import pandas as pd
+import time
+
+driver = webdriver.Chrome()
+driver.get(&quot;https://웹사이트주소.com&quot;)
+time.sleep(3)  # 자바스크립트 로딩 대기
+
+rows = driver.find_elements(By.TAG_NAME, &quot;tr&quot;)
+data = [[cell.text for cell in row.find_elements(By.TAG_NAME, &quot;td&quot;)]
+        for row in rows if row.find_elements(By.TAG_NAME, &quot;td&quot;)]
+df_web = pd.DataFrame(data)
+driver.quit()  # 브라우저 종료 (필수!)
+</code></pre>
+<h2>Practice 9 — PostgreSQL (Ex9·10)</h2>
+<p>psql 터미널</p>
+<pre><code class="language-bash">psql -d postgres -h localhost -U postgres  # DB 접속
+\dt   # 테이블 목록
+\q    # 종료
+</code></pre>
+<p>SQL 조회</p>
+<pre><code class="language-sql">-- (예시 테이블 countries: country, gdp, continent)
+SELECT * FROM countries;
+SELECT country, gdp FROM countries;
+SELECT * FROM countries WHERE gdp &gt; 1000000000000;
+SELECT * FROM countries ORDER BY gdp DESC LIMIT 5;
+SELECT continent, COUNT(*), AVG(gdp) FROM countries GROUP BY continent;
+SELECT * FROM countries
+JOIN population ON countries.country = population.country;
+</code></pre>
+<p>SQL 테이블 만들기·고치기·지우기</p>
+<pre><code class="language-sql">DROP TABLE Persons;  -- 먼저 삭제 (반복 실행용)
+
+CREATE TABLE Persons (
+    ID        SERIAL    PRIMARY KEY NOT NULL,
+    LastName  CHAR(32)  NOT NULL,
+    FirstName CHAR(32)
+);
+
+INSERT INTO Persons (LastName, FirstName)
+VALUES ('Jones', 'Tom');
+
+ALTER TABLE Persons ADD COLUMN Age INT;  -- 컬럼 추가
+
+SELECT * FROM Persons;
+</code></pre>
+<p>pandas ↔ PostgreSQL 연동</p>
+<pre><code class="language-python">import pandas as pd
+from sqlalchemy import create_engine
+
+# Codespaces 기본값: 사용자 postgres / 비밀번호 postgres
+engine = create_engine('postgresql://postgres:postgres@localhost:5432/postgres')
+
+df = pd.read_sql(&quot;SELECT * FROM 테이블명&quot;, engine)  # DB → DataFrame
+df.to_sql('테이블명', engine, if_exists='replace', index=False)  # DataFrame → DB
+</code></pre>
+  </article>
+  <p class="text-ink/40 text-xs mt-10 pb-14">James Consultant · Study Notes · Halifax, Nova Scotia, Canada</p>
+</main>
+</body>
+</html>

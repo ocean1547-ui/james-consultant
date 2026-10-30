@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DBAS 5115 Code Sheet 2 — DDL, DML & Tech Check 2 | Study Notes — James Consultant</title>
+<meta name="description" content="DBAS 5115 code sheet 2: Exercise 10 DDL for a five-table ERD, troubleshooting notes, and Tech Check 2 patterns for DML, JOINs, and Jupyter.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: { extend: {
+    colors: { ink:'#16262F', pine:'#1E3A34', paper:'#FAF8F3', mist:'#EFEAE0', brass:{ DEFAULT:'#A87C2A', dark:'#8A641F' } },
+    fontFamily: { display:['Fraunces','Georgia','serif'], sans:['Inter','system-ui','sans-serif'] }
+  } }
+}
+</script>
+<style>
+  body{-webkit-tap-highlight-color:transparent}
+  .sheet{font-size:15.5px;line-height:1.75;color:#16262F}
+  .sheet h1{font-family:Fraunces,Georgia,serif;font-size:1.9rem;font-weight:600;line-height:1.25;margin:0 0 1.2rem}
+  .sheet h2{font-family:Fraunces,Georgia,serif;font-size:1.4rem;font-weight:600;line-height:1.3;margin:2.6rem 0 0.9rem;padding-top:1.6rem;border-top:1px solid rgba(22,38,47,.12)}
+  .sheet h2:first-of-type{border-top:none;padding-top:0}
+  .sheet h3{font-size:1.08rem;font-weight:700;margin:1.9rem 0 0.6rem}
+  .sheet p{margin:0.7rem 0}
+  .sheet ul{list-style:disc;padding-left:1.5rem;margin:0.7rem 0}
+  .sheet ol{list-style:decimal;padding-left:1.5rem;margin:0.7rem 0}
+  .sheet li{margin:0.3rem 0}
+  .sheet li>ul,.sheet li>ol{margin:0.3rem 0}
+  .sheet a{color:#8A641F;font-weight:600;text-decoration:underline;text-decoration-color:rgba(168,124,42,.45);text-underline-offset:3px}
+  .sheet a:hover{text-decoration-color:#A87C2A}
+  .sheet strong{font-weight:700}
+  .sheet hr{border:none;border-top:1px solid rgba(22,38,47,.12);margin:2.2rem 0}
+  .sheet code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.88em;background:#EFEAE0;padding:.12em .35em;border-radius:4px}
+  .sheet pre{background:#16262F;color:#EDEAE2;padding:1rem 1.1rem;border-radius:8px;overflow-x:auto;margin:1rem 0;line-height:1.55}
+  .sheet pre code{background:transparent;padding:0;font-size:.85rem;color:inherit}
+  .sheet table{border-collapse:collapse;width:100%;margin:1rem 0;font-size:.92rem;line-height:1.5}
+  .sheet th,.sheet td{border:1px solid rgba(22,38,47,.18);padding:.45rem .7rem;text-align:left;vertical-align:top}
+  .sheet th{background:#EFEAE0;font-weight:700}
+  .sheet blockquote{border-left:3px solid #A87C2A;padding-left:1rem;margin:1rem 0;color:rgba(22,38,47,.75)}
+  .sheet img{max-width:100%}
+</style>
+</head>
+<body class="bg-paper text-ink font-sans antialiased">
+
+<!-- Header -->
+<header class="bg-paper/95 backdrop-blur border-b border-ink/10 sticky top-0 z-10">
+  <div class="max-w-5xl mx-auto px-5 py-3.5 flex items-center gap-3">
+    <a href="../" class="text-sm font-semibold text-ink/60 hover:text-ink">← James Consultant</a>
+    <a href="./" class="ml-auto text-sm font-semibold border border-ink/70 rounded-full px-4 py-1.5 hover:bg-ink hover:text-white transition">Study Notes</a>
+  </div>
+</header>
+
+<main class="max-w-5xl mx-auto px-5">
+  <article class="sheet max-w-3xl pt-12 pb-4">
+<h1>📊 DBAS 5115 Data &amp; PostgreSQL Practice 10~_code Sheet</h1>
+<p>Exercise 10부터 Tech Check 2까지 정리하는 시트입니다.
+(1~9는 <code>dbas5115-sheet.md</code> 참고)</p>
+<hr />
+<h2>Exercise 10 — DDL: CREATE, ALTER, &amp; DROP</h2>
+<p>테이블 <strong>구조</strong>를 만드는 과제. 데이터(INSERT)는 없음 — 그릇만 만드는 날.</p>
+<h3>ERD 5개 테이블</h3>
+<div class="overflow-x-auto"><table>
+<thead>
+<tr>
+<th>테이블</th>
+<th>컬럼 (타입)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>INSTRUCTOR</td>
+<td>Employee_ID INTEGER (PK), FirstName VARCHAR(20), LastName VARCHAR(20), Office VARCHAR(10), Phone VARCHAR(20)</td>
+</tr>
+<tr>
+<td>STUDENT</td>
+<td>Student_ID INTEGER (PK), FirstName VARCHAR(20), LastName VARCHAR(20), Dorm VARCHAR(10), Phone VARCHAR(20)</td>
+</tr>
+<tr>
+<td>COURSE</td>
+<td>Course_Number CHAR(9) (PK), Title VARCHAR(15), Hours INTEGER</td>
+</tr>
+<tr>
+<td>SECTION</td>
+<td>Call_No CHAR(5) (PK), Employee_ID INTEGER (FK1), Course_Number CHAR(9) (FK2)</td>
+</tr>
+<tr>
+<td>ENROLLMENT</td>
+<td>Call_No CHAR(5) (PK,FK1), Student_ID INTEGER (PK,FK2), FinalGrade DOUBLE</td>
+</tr>
+</tbody>
+</table></div>
+<h3>데이터타입 번역 (ERD → PostgreSQL)</h3>
+<div class="overflow-x-auto"><table>
+<thead>
+<tr>
+<th>ERD 표기</th>
+<th>PostgreSQL</th>
+<th>비고</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>INTEGER</td>
+<td>INTEGER (INT도 됨)</td>
+<td>그대로</td>
+</tr>
+<tr>
+<td>VARCHAR(n)</td>
+<td>VARCHAR(n)</td>
+<td>그대로</td>
+</tr>
+<tr>
+<td>CHAR(n)</td>
+<td>CHAR(n)</td>
+<td>그대로</td>
+</tr>
+<tr>
+<td>DOUBLE</td>
+<td><strong>DOUBLE PRECISION</strong></td>
+<td><code>DOUBLE</code> 단독은 에러! <code>(5,2)</code> 같은 길이 지정 불가</td>
+</tr>
+</tbody>
+</table></div>
+<h3>DDL 스크립트 전체</h3>
+<pre><code class="language-sql">-- ===== DROP: 맨 위에, 여러 번 돌려도 에러 없게 =====
+DROP TABLE IF EXISTS ENROLLMENT CASCADE;
+DROP TABLE IF EXISTS SECTION CASCADE;
+DROP TABLE IF EXISTS STUDENT CASCADE;
+DROP TABLE IF EXISTS INSTRUCTOR CASCADE;
+DROP TABLE IF EXISTS COURSE CASCADE;
+
+-- ===== CREATE: 5개 테이블 =====
+CREATE TABLE INSTRUCTOR (
+    Employee_ID INTEGER,
+    FirstName   VARCHAR(20),
+    LastName    VARCHAR(20),
+    Office      VARCHAR(10),
+    Phone       VARCHAR(20)
+);
+
+CREATE TABLE STUDENT (
+    Student_ID INTEGER,
+    FirstName  VARCHAR(20),
+    LastName   VARCHAR(20),
+    Dorm       VARCHAR(10),
+    Phone      VARCHAR(20)
+);
+
+CREATE TABLE COURSE (
+    Course_Number CHAR(9),
+    Title         VARCHAR(15),
+    Hours         INTEGER
+);
+
+CREATE TABLE SECTION (
+    Call_No       CHAR(5),
+    Employee_ID   INTEGER,
+    Course_Number CHAR(9)
+);
+
+CREATE TABLE ENROLLMENT (
+    Call_No     CHAR(5),
+    Student_ID  INTEGER,
+    FinalGrade  DOUBLE PRECISION   -- ERD의 DOUBLE 번역
+);
+
+-- ===== ALTER: 테이블 만든 뒤 컬럼 추가 =====
+ALTER TABLE STUDENT
+    ADD COLUMN Email VARCHAR(100);
+</code></pre>
+<h3>실행 &amp; 확인</h3>
+<pre><code class="language-bash"># 스크립트 실행 (비번: postgres)
+psql -d postgres -h localhost -U postgres -f 파일명.sql
+
+# 테이블 5개 확인
+psql -d postgres -h localhost -U postgres -c &quot;\dt&quot;
+
+# 특정 테이블 구조 확인
+psql -d postgres -h localhost -U postgres -c &quot;\d enrollment&quot;
+</code></pre>
+<h3>제출 체크리스트</h3>
+<ul>
+<li>[ ] <code>.sql</code> 파일이 레포 안에 저장됨</li>
+<li>[ ] 스크립트 에러 없이 실행됨 (CREATE TABLE × 5)</li>
+<li>[ ] <code>successful_table_creation.bmp</code> 스크린샷을 레포에 저장 (Win+Shift+S → 그림판 → BMP로 저장)</li>
+<li>[ ] commit + push</li>
+</ul>
+<h3>⚠️ 실전 트러블슈팅 (10/6 직접 겪음)</h3>
+<ol>
+<li><strong>password authentication failed</strong> → 비번 오타. <code>postgres</code> 정확히 입력. 서버는 살아있는데 비번만 틀린 경우.</li>
+<li><strong><code>syntax error at or near "PRECION"</code></strong> → 오타! <code>PRECISION</code> (PRECI<strong>S</strong>ION, S 있음). 그리고 <code>DOUBLE PRECISION</code> 뒤에 <code>(5,2)</code> 붙이면 안 됨.</li>
+<li><strong>테이블이 비어 있는 게 정상</strong> → DDL 과제는 구조만 만듦. 데이터 없음이 맞음.</li>
+<li><strong>출력에 DROP이 안 보여요</strong> → 터미널 스크롤 때문. 전체 순서는 DROP×5 → CREATE×5 → ALTER×1. 위로 스크롤하면 있음.</li>
+<li><strong>SQLTools 연결 안 됨</strong> → "Search VS Code Marketplace"에서 <code>SQLTools PostgreSQL/Cockroach Driver</code> 설치. 그래도 안 되면 터미널 <code>psql</code>이 확실.</li>
+</ol>
+<hr />
+<h2>Exercise 11 — (예정)</h2>
+<hr />
+<h2>Tech Check 2 — 2026-11-02 (월) 13:30, 수업 중 대면 실시</h2>
+<p>⚠️ <strong>원격 응시 불가</strong> — 교수가 Topics 페이지에 명시. 당일 수업에 직접 가야 함.</p>
+<h3>출제 범위 (교수 Topics 페이지 기준)</h3>
+<ol>
+<li><strong>SQL DML</strong> — 처음 보는 관계형 DB(sakila 아님)와 ERD가 주어지고:
+   - INSERT / UPDATE / DELETE 문 작성
+   - SELECT 쿼리로 원하는 결과 집합 뽑기 — GROUP BY·집계함수·ORDER BY·LIMIT, JOIN이 섞일 수 있음</li>
+<li><strong>Jupyter Notebook</strong>:
+   - 마크다운과 구조를 갖춘 노트북 작성
+   - 평소 라이브러리 + SQL 연동 라이브러리 import, 필요한 pip 패키지 설치
+   - SQL 쿼리 결과를 Pandas DataFrame으로 로드
+   - Pandas로 기본 계산·조작 → Matplotlib 차트 작성</li>
+</ol>
+<h3>DML 패턴 (테이블·컬럼명은 당일 주어지는 ERD 기준)</h3>
+<pre><code class="language-sql">-- ===== INSERT: 한 행 =====
+INSERT INTO 테이블 (컬럼1, 컬럼2, 컬럼3)
+VALUES (값1, '문자열은 작은따옴표', '2026-11-02');
+
+-- ===== INSERT: 여러 행 한 번에 =====
+INSERT INTO 테이블 (컬럼1, 컬럼2)
+VALUES (값1, 값2),
+       (값3, 값4);
+
+-- 방금 넣은 행 확인
+SELECT * FROM 테이블 ORDER BY 기본키 DESC LIMIT 1;
+</code></pre>
+<p>💡 날짜·문자열은 작은따옴표, NULL은 따옴표 없이 그냥 <code>NULL</code>. FK가 있는 자식 테이블은 <strong>부모 테이블 행이 먼저</strong> 있어야 INSERT 됨.</p>
+<pre><code class="language-sql">-- ===== UPDATE =====
+UPDATE 테이블
+SET 컬럼 = 새값
+WHERE 조건;
+</code></pre>
+<p>⚠️ <strong>WHERE를 빠뜨리면 전체 행이 다 바뀐다.</strong> 실행 전에 같은 WHERE로 <code>SELECT</code> 먼저 돌려서 대상 행만 맞는지 확인.</p>
+<pre><code class="language-sql">-- ===== DELETE =====
+DELETE FROM 테이블
+WHERE 조건;
+</code></pre>
+<p>⚠️ 다른 테이블이 FK로 참조하는 행은 바로 못 지움 — 참조하는 자식 행(연결 테이블 등)부터 지우고 부모를 지울 것.</p>
+<pre><code class="language-sql">-- ===== SELECT 심화: 그룹핑·집계·정렬·제한 =====
+SELECT 그룹컬럼, COUNT(*) AS 개수, SUM(금액컬럼) AS 합계
+FROM 테이블
+WHERE 조건
+GROUP BY 그룹컬럼
+HAVING COUNT(*) &gt; 1
+ORDER BY 합계 DESC
+LIMIT 5;
+</code></pre>
+<pre><code class="language-sql">-- ===== JOIN: 두 테이블 연결 =====
+SELECT a.컬럼, b.컬럼
+FROM 테이블A AS a
+INNER JOIN 테이블B AS b ON a.키컬럼 = b.키컬럼
+WHERE 조건;
+</code></pre>
+<p>💡 <code>LEFT JOIN</code> = 왼쪽 테이블은 전부 나오고, 매칭이 없으면 오른쪽은 NULL.</p>
+<h3>Jupyter 패턴 (수업 방식 그대로)</h3>
+<pre><code class="language-python"># 필요한 패키지 설치 (노트북 셀에서 한 번)
+%pip install sqlalchemy psycopg2-binary
+</code></pre>
+<pre><code class="language-python">import pandas as pd
+import matplotlib.pyplot as plt
+from sqlalchemy import create_engine
+
+# Codespaces 기본값: 사용자 postgres / 비밀번호 postgres
+engine = create_engine('postgresql://postgres:postgres@localhost:5432/postgres')
+
+df = pd.read_sql(&quot;&quot;&quot;
+    SELECT 컬럼, COUNT(*) AS 개수
+    FROM 테이블
+    GROUP BY 컬럼
+&quot;&quot;&quot;, engine)
+
+display(df.head())
+</code></pre>
+<pre><code class="language-python"># Pandas 기본 계산·조작
+df.describe()                                  # 기초 통계
+df['새컬럼'] = df['기존컬럼'] * 2               # 파생 컬럼
+df_sorted = df.sort_values('개수', ascending=False)
+
+# Matplotlib 차트
+plt.figure(figsize=(10, 6))
+plt.bar(df_sorted['컬럼'], df_sorted['개수'])
+plt.title('제목')
+plt.xlabel('x축 이름')
+plt.ylabel('y축 이름')
+plt.show()
+</code></pre>
+<h3>당일 체크리스트</h3>
+<ul>
+<li>[ ] 노트북 지참 (대면만 가능 — 원격 응시 옵션 없음)</li>
+<li>[ ] PostgreSQL 서버 실행 + 비밀번호 <code>postgres</code> 확인</li>
+<li>[ ] ERD를 받으면 테이블·PK·FK부터 표시 — INSERT 순서는 부모 → 자식</li>
+<li>[ ] UPDATE/DELETE 전에는 같은 WHERE로 SELECT 해서 대상 행 확인</li>
+<li>[ ] 노트북은 제출 전 Run All로 처음부터 끝까지 에러 없이 도는지 확인</li>
+</ul>
+  </article>
+  <p class="text-ink/40 text-xs mt-10 pb-14">James Consultant · Study Notes · Halifax, Nova Scotia, Canada</p>
+</main>
+</body>
+</html>

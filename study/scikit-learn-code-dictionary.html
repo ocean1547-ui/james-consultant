@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>감마선 사냥 (Scikit-learn) 전체 코드 사전</title>
+    <style>
+        body { font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; color: #333; }
+        .container { max-width: 1000px; margin: 0 auto; }
+        h1 { text-align: center; color: #2c3e50; margin-bottom: 20px; }
+        p.subtitle { text-align: center; color: #7f8c8d; margin-bottom: 30px; }
+        
+        .search-container { position: sticky; top: 0; background: #f4f7f6; padding: 15px 0; z-index: 100; border-bottom: 2px solid #ddd; margin-bottom: 20px; }
+        .search-box { width: 100%; padding: 15px 20px; font-size: 16px; border: 2px solid #3498db; border-radius: 8px; box-sizing: border-box; outline: none; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .search-box:focus { border-color: #2980b9; }
+        
+        .filter-buttons { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+        .filter-btn { background: #e0e0e0; border: none; padding: 8px 15px; border-radius: 20px; cursor: pointer; font-size: 14px; transition: 0.3s; }
+        .filter-btn.active, .filter-btn:hover { background: #3498db; color: white; }
+        
+        .card { background: #fff; padding: 25px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .card-header { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 2px solid #ecf0f1; padding-bottom: 10px; margin-bottom: 15px; }
+        .card h2 { margin: 0; color: #2980b9; font-size: 1.3rem; }
+        .badge { background: #e67e22; color: white; padding: 4px 10px; border-radius: 12px; font-size: 0.8rem; font-weight: bold; }
+        
+        .code-container { position: relative; }
+        pre { background: #282c34; color: #abb2bf; padding: 15px; border-radius: 6px; overflow-x: auto; font-family: Consolas, Monaco, monospace; line-height: 1.5; font-size: 0.95rem; }
+        .copy-btn { position: absolute; top: 10px; right: 10px; background: #3498db; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: bold; transition: 0.2s; }
+        .copy-btn:hover { background: #2980b9; }
+        
+        .hidden { display: none; }
+        #noResultMessage { text-align: center; color: #7f8c8d; padding: 20px; font-size: 1.1rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔭 Scikit-learn 전체 코드 스니펫 사전 (48페이지 수록본)</h1>
+        <p class="subtitle">핵심만 추리지 않고, PDF 교재에 등장하는 <b>모든 코드 블록(45개)</b>을 파트별로 분류하여 담았습니다.</p>
+        
+        <div class="search-container">
+            <input type="text" id="searchInput" class="search-box" placeholder="검색어를 입력하세요 (예: import, plot, cross_val, threshold)...">
+            <div class="filter-buttons" id="filterContainer">
+                <button class="filter-btn active" data-category="all">전체 보기</button>
+            </div>
+        </div>
+        
+        <div id="codeList"></div>
+        <div id="noResultMessage" class="hidden">검색 결과가 없습니다.</div>
+    </div>
+
+    <script>
+const codeData = [{"id": 0, "category": "Part 2 (Load and inspect)", "title": "데이터 불러오기", "code": "from sklearn.datasets import fetch_openml\nmagic = fetch_openml(data_id=1120, as_frame=True)\nX = magic.data\nX.columns = X.columns.str.rstrip(\":\")  # \"fLength:\" -> \"fLength\"\ny = (magic.target == \"g\").astype(int)  # 1 = gamma, 0 = hadron\nX.shape"}, {"id": 1, "category": "Part 2 (Load and inspect)", "title": "데이터 확인하기", "code": "X.head()"}, {"id": 2, "category": "Part 2 (Load and inspect)", "title": "데이터 확인하기", "code": "y.value_counts()"}, {"id": 3, "category": "Part 2 (Load and inspect)", "title": "데이터 내 숨겨진 함정(정렬 문제) 확인", "code": "y.head(3).tolist(), y.tail(3).tolist()"}, {"id": 4, "category": "Part 3 (Explore plots)", "title": "요약 통계량 확인", "code": "X.describe().T.round(2)"}, {"id": 5, "category": "Part 3 (Explore plots)", "title": "3.2 Every feature, gamma vs hadron (코드)", "code": "import matplotlib.pyplot as plt\nfig, axes = plt.subplots(2, 5, figsize=(16, 6))\nfor ax, col in zip(axes.ravel(), X.columns):\n    ax.hist(X.loc[y == 1, col], bins=50, density=True, alpha=0.6,\n            label=\"gamma\")\n    ax.hist(X.loc[y == 0, col], bins=50, density=True, alpha=0.6,\n            label=\"hadron\")\n    ax.set_title(col)\naxes[0, 0].legend()\nplt.tight_layout()\nplt.show()"}, {"id": 6, "category": "Part 3 (Explore plots)", "title": "3.3 Two features at once (코드)", "code": "sample = X.sample(3000, random_state=0)\ncolors = y[sample.index].map({1: \"tab:blue\", 0: \"tab:orange\"})\nsample.plot.scatter(x=\"fAlpha\", y=\"fLength\", c=colors, s=6, alpha=0.5,\n                    title=\"blue = gamma, orange = hadron\")\nplt.show()"}, {"id": 7, "category": "Part 4 (Baseline)", "title": "4.1 Split once, then lock the test set away (코드)", "code": "from sklearn.model_selection import train_test_split\nX_train, X_test, y_train, y_test = train_test_split(\n    X, y, test_size=0.2, stratify=y, random_state=42\n)\nX_train.shape, X_test.shape"}, {"id": 8, "category": "Part 4 (Baseline)", "title": "4.2 The dumbest possible model (코드)", "code": "from sklearn.dummy import DummyClassifier\nfrom sklearn.model_selection import StratifiedKFold, cross_val_score\ncv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)\ndummy = DummyClassifier(strategy=\"most_frequent\")\nacc = cross_val_score(dummy, X_train, y_train, cv=cv, scoring=\"accuracy\")\nauc = cross_val_score(dummy, X_train, y_train, cv=cv, scoring=\"roc_auc\")\nprint(\"accuracy:\", acc.mean().round(3))\nprint(\"ROC AUC: \", auc.mean().round(3))"}, {"id": 9, "category": "Part 5 (Pipeline)", "title": "5.1 Logistic regression in a pipeline (코드)", "code": "from sklearn.pipeline import make_pipeline\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.linear_model import LogisticRegression\nlogreg = make_pipeline(StandardScaler(), LogisticRegression(max_iter=1000))\nfor metric in [\"accuracy\", \"roc_auc\"]:\n    scores = cross_val_score(logreg, X_train, y_train, cv=cv, scoring=metric)\n    print(f\"{metric:9s} {scores.round(3)}  mean {scores.mean():.3f}\")"}, {"id": 10, "category": "Part 5 (Pipeline)", "title": "5.2 Peek inside the model (optional) (코드)", "code": "import pandas as pd\nlogreg.fit(X_train, y_train)\ncoefs = pd.Series(logreg[-1].coef_[0], index=X.columns).sort_values()\ncoefs.round(2)"}, {"id": 11, "category": "Part 5 (Pipeline)", "title": "5.3 The sorted-file trap, in numbers (코드)", "code": "from sklearn.model_selection import KFold\nin_order = KFold(n_splits=5)\nmixed = KFold(n_splits=5, shuffle=True, random_state=42)\nno_shuffle = cross_val_score(logreg, X, y, cv=in_order, scoring=\"accuracy\")\nshuffled = cross_val_score(logreg, X, y, cv=mixed, scoring=\"accuracy\")\nprint(\"no shuffle:\", no_shuffle.round(3))\nprint(\"shuffled:  \", shuffled.round(3))"}, {"id": 12, "category": "Part 6 (Evaluation)", "title": "6.1 Honest predictions without touching the test set (코드)", "code": "import pandas as pd\nfrom sklearn.model_selection import cross_val_predict\nproba = cross_val_predict(logreg, X_train, y_train, cv=cv,\n                          method=\"predict_proba\")[:, 1]\ntruth = y_train.map({1: \"gamma\", 0: \"hadron\"})\npeek = pd.DataFrame({\"P(gamma)\": proba.round(3), \"truth\": truth})\npeek.head(8)"}, {"id": 13, "category": "Part 6 (Evaluation)", "title": "6.1 Honest predictions without touching the test set (코드)", "code": "peek.groupby(\"truth\")[\"P(gamma)\"].describe().round(2)"}, {"id": 14, "category": "Part 6 (Evaluation)", "title": "6.2 Which mistakes is it making? (코드)", "code": "from sklearn.metrics import ConfusionMatrixDisplay\npred = (proba >= 0.5).astype(int)\nConfusionMatrixDisplay.from_predictions(y_train, pred,\n                                        display_labels=[\"hadron\", \"gamma\"])\nplt.show()"}, {"id": 15, "category": "Part 6 (Evaluation)", "title": "6.3 Every threshold at once: the ROC curve (코드)", "code": "from sklearn.metrics import RocCurveDisplay\nRocCurveDisplay.from_predictions(y_train, proba, name=\"Logistic regression\")\nplt.axvline(0.05, color=\"grey\", linestyle=\"--\")\nplt.show()"}, {"id": 16, "category": "Part 6 (Evaluation)", "title": "0.93 … 93% of the time (코드)", "code": "Model ROC\nAUC\nIn plain words\nDummy (always\n“gamma”)\n0.50 A coin flip: it can’t rank anything\nLogistic regression 0.84 A random gamma outscores a random hadron 84%\nof the time\nGradient boosting (Part\n7)\n0.93 … 93% of the time\nA perfect model 1.00 Every gamma scores above every hadron\nimport numpy as np\nfrom sklearn.metrics import roc_auc_score\nrng = np.random.default_rng(0)\ngamma_scores = rng.choice(proba[y_train == 1], 100_000)\nhadron_scores = rng.choice(proba[y_train == 0], 100_000)\nwins = (gamma_scores > hadron_scores).mean()\nauc = roc_auc_score(y_train, proba)\nprint(f\"random gamma beats random hadron: {wins:.3f}\")\nprint(f\"roc_auc_score:                    {auc:.3f}\")"}, {"id": 17, "category": "Part 6 (Evaluation)", "title": "6.5 Write the metric the domain asks for (코드)", "code": "from sklearn.metrics import roc_curve, make_scorer\ndef tpr_at_fpr(y_true, y_score, max_fpr=0.05):\n    fpr, tpr, _ = roc_curve(y_true, y_score)\n    return tpr[fpr <= max_fpr].max()\ntpr_at_fpr(y_train, proba)"}, {"id": 18, "category": "Part 6 (Evaluation)", "title": "6.5 Write the metric the domain asks for (코드)", "code": "tpr_at_5 = make_scorer(tpr_at_fpr,\n                       response_method=(\"decision_function\", \n\"predict_proba\"))\nscoring = {\"auc\": \"roc_auc\", \"tpr5\": tpr_at_5}"}, {"id": 19, "category": "Part 7 (Bake-off)", "title": "7.1 Five model families, default settings (코드)", "code": "from sklearn.model_selection import cross_validate\nfrom sklearn.neighbors import KNeighborsClassifier\nfrom sklearn.svm import SVC\nfrom sklearn.ensemble import (RandomForestClassifier,\n                              HistGradientBoostingClassifier)\nmodels = {\n    \"Logistic regression\": make_pipeline(StandardScaler(),\n                                         LogisticRegression(max_iter=1000)),\n    \"KNN\": make_pipeline(StandardScaler(), KNeighborsClassifier()),\n    \"SVM (RBF)\": make_pipeline(StandardScaler(), SVC()),\n    \"Random forest\": RandomForestClassifier(random_state=42),\n    \"Gradient boosting\": HistGradientBoostingClassifier(random_state=42),\n}"}, {"id": 20, "category": "Part 7 (Bake-off)", "title": "7.1 Five model families, default settings (코드)", "code": "rows = []\nfor name, model in models.items():\n    res = cross_validate(model, X_train, y_train, cv=cv, scoring=scoring,\n                         n_jobs=-1)\n    rows.append({\n        \"model\": name,\n        \"auc\": res[\"test_auc\"].mean(),\n        \"auc_std\": res[\"test_auc\"].std(),\n        \"tpr5\": res[\"test_tpr5\"].mean(),\n        \"fit_s\": res[\"fit_time\"].mean(),\n        \"score_s\": res[\"score_time\"].mean(),\n    })\nbakeoff = pd.DataFrame(rows).sort_values(\"auc\", ascending=False)\nbakeoff.round(3)\nExpect (about 25 seconds; times below are from a 2-core machine, so expect faster runs\nwith similar ratios):"}, {"id": 21, "category": "Part 7 (Bake-off)", "title": "7.2 Plot it honestly (코드)", "code": "fig, ax = plt.subplots(figsize=(7, 3.5))\nax.errorbar(bakeoff[\"auc\"], bakeoff[\"model\"], xerr=bakeoff[\"auc_std\"],\n            fmt=\"o\", capsize=4)\nax.invert_yaxis()\nax.set_xlabel(\"ROC AUC, 5-fold CV (mean ± std)\")\nax.grid(axis=\"x\", alpha=0.3)\nplt.show()"}, {"id": 22, "category": "Part 8 (Tuning)", "title": "8.1 Parameters vs hyperparameters (코드)", "code": "HistGradientBoostingClassifier().get_params()"}, {"id": 23, "category": "Part 8 (Tuning)", "title": "8.2 One knob: a validation curve (코드)", "code": "k train validation\n1 1.000 0.782\n3 0.971 0.852\n5 0.956 0.874\n10 0.940 0.892\n20 0.926 0.899\n30 0.918 0.900\n50 0.910 0.898\n80 0.902 0.895\n120 0.897 0.892\n200 0.888 0.885\nfig, ax = plt.subplots(figsize=(7, 4.5))\nax.plot(k_values, train_auc.mean(axis=1), marker=\"o\", label=\"training folds\")\nax.plot(k_values, val_auc.mean(axis=1), marker=\"o\", label=\"validation folds\")\nax.set_xscale(\"log\")\nax.set_xticks(k_values, k_values)\nax.minorticks_off()\nax.set_xlabel(\"n_neighbors (log scale)\")\nax.set_ylabel(\"ROC AUC\")\nax.legend()\nax.grid(alpha=0.3)\nplt.show()"}, {"id": 24, "category": "Part 8 (Tuning)", "title": "8.3 Two knobs that interact: a grid search (코드)", "code": "from sklearn.model_selection import GridSearchCV\nparam_grid = {\n    \"learning_rate\": [0.01, 0.03, 0.1, 0.3, 1.0],\n    \"max_iter\": [50, 100, 200, 400, 800],\n}\ngrid = GridSearchCV(\n    HistGradientBoostingClassifier(early_stopping=False, random_state=42),\n    param_grid, cv=cv, scoring=\"roc_auc\", return_train_score=True,\n    n_jobs=-1, verbose=1,\n)\ngrid.fit(X_train, y_train)\nprint(grid.best_params_, grid.best_score_.round(4))\nSay (while it runs, 1 to 2 minutes):\nGridSearchCV tries every combination: 5 × 5 = 25 settings, × 5 folds = 125 fits.\nlearning_rate is how big a step each new tree takes; max_iter is how many trees\nget built.\nearly_stopping=False makes every model really build max_iter trees. By default, on\ndata with more than 10,000 rows, boosting holds back 10% of its training data and\nstops adding trees once that stops improving. We switch it off to see the full trade-off."}, {"id": 25, "category": "Part 8 (Tuning)", "title": "8.3 Two knobs that interact: a grid search (코드)", "code": "grid_results = pd.DataFrame(grid.cv_results_)\nheat = grid_results.pivot(index=\"param_learning_rate\",\n                          columns=\"param_max_iter\",\n                          values=\"mean_test_score\")\nfloor = 0.90   # colour floor, so the bottom row doesn't wash out the rest\nmid = (heat.values.max() + floor) / 2\nfig, ax = plt.subplots(figsize=(7, 4.5))\nim = ax.imshow(heat.values, cmap=\"viridis\", vmin=floor)\nax.set_xticks(range(heat.shape[1]), heat.columns)\nax.set_yticks(range(heat.shape[0]), heat.index)\nax.set_xlabel(\"max_iter (number of trees)\")\nax.set_ylabel(\"learning_rate\")\nfor r in range(heat.shape[0]):\n    for c in range(heat.shape[1]):\n        value = heat.values[r, c]\n        ax.text(c, r, f\"{value:.3f}\", ha=\"center\", va=\"center\",\n                color=\"black\" if value > mid else \"white\")\nfig.colorbar(im, label=\"ROC AUC (5-fold CV)\")\nplt.show()"}, {"id": 26, "category": "Part 8 (Tuning)", "title": "0.01 needs all 800 trees to reach 0.934; a rate of 0.1 gets there with 100. Settings (코드)", "code": "default_rate = grid_results[grid_results[\"param_learning_rate\"] == 0.1]\nshow_cols = [\"param_max_iter\", \"mean_train_score\", \"mean_test_score\",\n             \"mean_fit_time\"]\ndefault_rate[show_cols].round(3)\nExpect (fit times depend on the machine):"}, {"id": 27, "category": "Part 8 (Tuning)", "title": "8.4 Scale up: make the model itself a hyperparameter (코드)", "code": "from sklearn.pipeline import Pipeline\nfrom scipy.stats import loguniform, randint\npipe = Pipeline([(\"scale\", StandardScaler()),\n                 (\"model\", LogisticRegression())])\nsearch_space = [\n    {\nparam_max_iter mean_train_score mean_test_score mean_fit_time\n50 0.960 0.930 0.192\n100 0.979 0.934 0.296\n200 0.995 0.935 0.570\n400 1.000 0.935 1.020\n800 1.000 0.934 1.989\n        \"model\": [LogisticRegression(max_iter=1000)],\n        \"model__C\": loguniform(1e-3, 1e2),\n    },\n    {\n        \"model\": [KNeighborsClassifier()],\n        \"model__n_neighbors\": randint(3, 80),\n        \"model__weights\": [\"uniform\", \"distance\"],\n    },\n    {\n        \"scale\": [\"passthrough\"],\n        \"model\": [RandomForestClassifier(random_state=42)],\n        \"model__max_features\": [0.2, 0.4, 0.6, 0.8],\n        \"model__min_samples_leaf\": randint(1, 30),\n    },\n    {\n        \"scale\": [\"passthrough\"],\n        \"model\": [HistGradientBoostingClassifier(random_state=42)],\n        \"model__learning_rate\": loguniform(0.01, 0.5),\n        \"model__max_leaf_nodes\": randint(4, 128),\n        \"model__l2_regularization\": loguniform(1e-3, 10),\n    },\n]"}, {"id": 28, "category": "Part 8 (Tuning)", "title": "탐색 실행", "code": "from sklearn.model_selection import RandomizedSearchCV\nsearch = RandomizedSearchCV(\n    pipe, search_space, n_iter=60, cv=cv, scoring=scoring, refit=\"auc\",\n    return_train_score=True, n_jobs=-1, random_state=42, verbose=1,\n)\nsearch.fit(X_train, y_train)\nprint(search.best_score_.round(4))\nsearch.best_params_\nSay (while it runs, 1 to 3 minutes):\nRandomizedSearchCV tries 60 random combinations instead of every one. A grid over\nthese ranges would need thousands of fits. Random search spends the same budget\nbetter when only a few settings really matter, which is the usual case.\nWith a list of dictionaries, each draw first picks a dictionary at random, so each family\ngets roughly 15 tries.\nscoring=scoring records both of our metrics for every candidate. refit=\"auc\" says\nwhich one picks the winner, and then refits that winner on all 15,216 training events.\nreturn_train_score=True also records how well each candidate scored on its own\ntraining folds, so we can check for overfitting."}, {"id": 29, "category": "Part 8 (Tuning)", "title": "8.6 The leaderboard (코드)", "code": "results = pd.DataFrame(search.cv_results_)\nnames = {\"LogisticRegression\": \"Logistic regression\",\n         \"KNeighborsClassifier\": \"KNN\",\n         \"RandomForestClassifier\": \"Random forest\",\n         \"HistGradientBoostingClassifier\": \"Gradient boosting\"}\nresults[\"family\"] = results[\"param_model\"].apply(\n    lambda m: names[type(m).__name__])\ncols = [\"family\", \"mean_test_auc\", \"std_test_auc\", \"mean_test_tpr5\",\n        \"std_test_tpr5\", \"mean_fit_time\"]\nresults.sort_values(\"rank_test_auc\")[cols].head(8).round(3)"}, {"id": 30, "category": "Part 8 (Tuning)", "title": "8.7 How much did tuning buy each family? (코드)", "code": "results.groupby(\"family\")[\"mean_test_auc\"].agg([\"min\", \"max\"]).round(3)\nExpect, combined with the defaults from Part 7 (put this table on screen; it is the lesson\nof the session):"}, {"id": 31, "category": "Part 8 (Tuning)", "title": "8.8 Score against cost (코드)", "code": "fig, ax = plt.subplots(figsize=(8, 5))\nfor family, group in results.groupby(\"family\"):\n    ax.scatter(group[\"mean_fit_time\"], group[\"mean_test_auc\"],\n               label=family, alpha=0.7)\nax.scatter(bakeoff[\"fit_s\"], bakeoff[\"auc\"], marker=\"x\", color=\"black\",\n           label=\"defaults (Part 7)\")\nax.set_xscale(\"log\")\nax.set_xlabel(\"mean fit time per fold (s, log scale)\")\nax.set_ylabel(\"ROC AUC (5-fold CV)\")\nax.legend()\nax.grid(alpha=0.3)\nplt.show()"}, {"id": 32, "category": "Part 8 (Tuning)", "title": "8.9 Keep the winner (코드)", "code": "best = search.best_estimator_\nbest"}, {"id": 33, "category": "Part 9 (Inspection)", "title": "9.1 Which features does it rely on? (코드)", "code": "from sklearn.inspection import permutation_importance\nimp = permutation_importance(best, X_train, y_train, scoring=\"roc_auc\",\n                             n_repeats=5, random_state=42, n_jobs=-1)\nimp_df = pd.DataFrame({\"mean\": imp.importances_mean,\n                       \"std\": imp.importances_std},\n                      index=X.columns).sort_values(\"mean\")\nimp_df[\"mean\"].plot.barh(xerr=imp_df[\"std\"], figsize=(7, 4))\nplt.xlabel(\"drop in ROC AUC when the feature is shuffled\")\nplt.show()"}, {"id": 34, "category": "Part 9 (Inspection)", "title": "9.2 How does the prediction change with a feature? (코드)", "code": "from sklearn.inspection import PartialDependenceDisplay\nPartialDependenceDisplay.from_estimator(best, X_train, [\"fAlpha\", \"fWidth\"])\nplt.show()"}, {"id": 35, "category": "Part 10 (Threshold)", "title": "10.1 Find the threshold that meets the physicists’ limit (코드)", "code": "import numpy as np\nproba_oof = cross_val_predict(best, X_train, y_train, cv=cv,\n                              method=\"predict_proba\", n_jobs=-1)[:, 1]\nfpr, tpr, thresholds = roc_curve(y_train, proba_oof)\ni = np.where(fpr <= 0.05)[0][-1]   # loosest threshold with leak <= 5%\nthreshold = thresholds[i]\nprint(f\"threshold {threshold:.3f}: hadron leak {fpr[i]:.3f}, \"\n      f\"gammas kept {tpr[i]:.3f}\")"}, {"id": 36, "category": "Part 10 (Threshold)", "title": "10.2 Same model, two different decisions (코드)", "code": "for t in [0.5, threshold]:\n    called_gamma = proba_oof >= t\n    leak = called_gamma[y_train == 0].mean()\n    kept = called_gamma[y_train == 1].mean()\n    print(f\"threshold {t:.2f}: hadron leak {leak:.1%}, \"\n          f\"gammas kept {kept:.1%}\")"}, {"id": 37, "category": "Part 10 (Threshold)", "title": "10.3 See the trade-off (코드)", "code": "fig, ax = plt.subplots(figsize=(8, 4))\nax.hist(proba_oof[y_train == 1], bins=50, alpha=0.6, label=\"gamma\")\nax.hist(proba_oof[y_train == 0], bins=50, alpha=0.6, label=\"hadron\")\nax.axvline(0.5, color=\"grey\", linestyle=\":\", label=\"default 0.5\")\nax.axvline(threshold, color=\"black\", linestyle=\"--\",\n           label=f\"chosen {threshold:.2f}\")\nax.set_yscale(\"log\")\nax.set_xlabel(\"out-of-fold probability of gamma\")\nax.set_ylabel(\"events (log scale)\")\nax.legend(loc=\"upper left\", bbox_to_anchor=(1, 1))\nplt.show()"}, {"id": 38, "category": "Part 10 (Threshold)", "title": "10.4 Bake the threshold into the model (코드)", "code": "from sklearn.model_selection import FixedThresholdClassifier\nfinal_model = FixedThresholdClassifier(best, threshold=threshold)\nfinal_model.fit(X_train, y_train)"}, {"id": 39, "category": "Part 11 (Save/Reload)", "title": "11.1 Open the drawer, once (코드)", "code": "from sklearn.metrics import roc_auc_score, confusion_matrix\ntest_proba = final_model.predict_proba(X_test)[:, 1]\ntest_pred = final_model.predict(X_test)\ntn, fp, fn, tp = confusion_matrix(y_test, test_pred).ravel()\nprint(f\"test ROC AUC: {roc_auc_score(y_test, test_proba):.3f}\")\nprint(f\"hadron leak:  {fp / (fp + tn):.1%}  ({fp} of {fp + tn})\")\nprint(f\"gammas kept:  {tp / (tp + fn):.1%}  ({tp} of {tp + fn})\")"}, {"id": 40, "category": "Part 11 (Save/Reload)", "title": "11.2 The full picture (코드)", "code": "from sklearn.metrics import classification_report\nConfusionMatrixDisplay.from_predictions(y_test, test_pred,\n                                        display_labels=[\"hadron\", \"gamma\"])\nplt.show()\nprint(classification_report(y_test, test_pred,\n                            target_names=[\"hadron\", \"gamma\"]))"}, {"id": 41, "category": "Part 11 (Save/Reload)", "title": "11.3 Save the model with its context (코드)", "code": "import joblib\nfrom datetime import date\nbundle = {\n    \"model\": final_model,\n    \"features\": list(X.columns),\n    \"threshold\": float(threshold),\n    \"sklearn_version\": sklearn.__version__,\n    \"trained_on\": str(date.today()),\n    \"cv_auc\": round(search.best_score_, 4),\n}\njoblib.dump(bundle, \"magic_gamma_model.joblib\")"}, {"id": 42, "category": "Part 11 (Save/Reload)", "title": "11.4 Reload it (코드)", "code": "loaded = joblib.load(\"magic_gamma_model.joblib\")\nmodel = loaded[\"model\"]\nloaded[\"sklearn_version\"], loaded[\"threshold\"]"}, {"id": 43, "category": "Part 11 (Save/Reload)", "title": "11.5 Classify brand-new events (코드)", "code": "typical_gamma = {\"fLength\": 34.5, \"fWidth\": 17.0, \"fSize\": 2.70,\n                 \"fConc\": 0.35, \"fConc1\": 0.19, \"fAsym\": 6.4,\n                 \"fM3Long\": 16.9, \"fM3Trans\": 0.8, \"fAlpha\": 5.0,\n                 \"fDist\": 187.7}\nnew_events = pd.DataFrame([typical_gamma, {**typical_gamma, \"fAlpha\": 60.0}],\n                          columns=loaded[\"features\"])\nmodel.predict_proba(new_events)[:, 1].round(3), model.predict(new_events)"}, {"id": 44, "category": "Part 11 (Save/Reload)", "title": "11.6 Finale: at what angle does it stop being a gamma? (코드)", "code": "for angle in [5, 10, 15, 20, 30, 45, 60]:\n    event = new_events.iloc[[0]].assign(fAlpha=float(angle))\n    p = model.predict_proba(event)[0, 1]\n    label = model.predict(event)[0]\n    print(f\"fAlpha {angle:>2} deg: P(gamma) = {p:.3f} -> {label}\")"}];
+const categories = ["Part 10 (Threshold)", "Part 11 (Save/Reload)", "Part 2 (Load and inspect)", "Part 3 (Explore plots)", "Part 4 (Baseline)", "Part 5 (Pipeline)", "Part 6 (Evaluation)", "Part 7 (Bake-off)", "Part 8 (Tuning)", "Part 9 (Inspection)"];
+
+        const searchInput = document.getElementById('searchInput');
+        const codeList = document.getElementById('codeList');
+        const noResultMessage = document.getElementById('noResultMessage');
+        const filterContainer = document.getElementById('filterContainer');
+        let currentFilter = 'all';
+
+        // Initialize Category Filters
+        categories.forEach(cat => {
+            const btn = document.createElement('button');
+            btn.className = 'filter-btn';
+            btn.dataset.category = cat;
+            btn.innerText = cat;
+            btn.onclick = () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentFilter = cat;
+                renderCards();
+            };
+            filterContainer.appendChild(btn);
+        });
+
+        // Add 'all' button functionality
+        document.querySelector('.filter-btn[data-category="all"]').onclick = function() {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            currentFilter = 'all';
+            renderCards();
+        };
+
+        // Escape HTML
+        function escapeHtml(unsafe) {
+            return unsafe
+                 .replace(/&/g, "&amp;")
+                 .replace(/</g, "&lt;")
+                 .replace(/>/g, "&gt;")
+                 .replace(/"/g, "&quot;")
+                 .replace(/'/g, "&#039;");
+        }
+
+        // Render function
+        function renderCards() {
+            const term = searchInput.value.toLowerCase();
+            let filtered = codeData.filter(item => {
+                const matchCategory = currentFilter === 'all' || item.category === currentFilter;
+                const matchText = item.title.toLowerCase().includes(term) || 
+                                  item.code.toLowerCase().includes(term) ||
+                                  item.category.toLowerCase().includes(term);
+                return matchCategory && matchText;
+            });
+
+            codeList.innerHTML = '';
+            if (filtered.length === 0) {
+                noResultMessage.classList.remove('hidden');
+                return;
+            }
+            noResultMessage.classList.add('hidden');
+
+            filtered.forEach((item) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="card-header">
+                        <h2>${item.title}</h2>
+                        <span class="badge">${item.category}</span>
+                    </div>
+                    <div class="code-container">
+                        <button class="copy-btn" onclick="copyCode(${item.id})">코드 복사</button>
+                        <pre><code>${escapeHtml(item.code)}</code></pre>
+                    </div>
+                `;
+                codeList.appendChild(card);
+            });
+        }
+
+        searchInput.addEventListener('input', renderCards);
+
+        // Copy functionality
+        function copyCode(id) {
+            const item = codeData.find(d => d.id === id);
+            navigator.clipboard.writeText(item.code).then(() => {
+                alert('코드가 클립보드에 복사되었습니다!');
+            }).catch(err => {
+                alert('복사 실패. 브라우저 권한을 확인해주세요.');
+            });
+        }
+
+        // Initial render
+        renderCards();
+    </script>
+</body>
+</html>

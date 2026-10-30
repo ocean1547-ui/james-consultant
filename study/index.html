@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Study Notes — James Consultant | Halifax, Nova Scotia</title>
+<meta name="description" content="Study notes and code references from James Song's NSCC AI program courses — database and machine-learning code sheets, kept open for quick reference.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: { extend: {
+    colors: { ink:'#16262F', pine:'#1E3A34', paper:'#FAF8F3', mist:'#EFEAE0', brass:{ DEFAULT:'#A87C2A', dark:'#8A641F' } },
+    fontFamily: { display:['Fraunces','Georgia','serif'], sans:['Inter','system-ui','sans-serif'] }
+  } }
+}
+</script>
+<style>
+  body{-webkit-tap-highlight-color:transparent}
+  .rowlink{transition:background .15s}
+  .rowlink:hover{background:#fff}
+</style>
+</head>
+<body class="bg-paper text-ink font-sans antialiased">
+
+<!-- Header -->
+<header class="bg-paper/95 backdrop-blur border-b border-ink/10 sticky top-0 z-10">
+  <div class="max-w-5xl mx-auto px-5 py-3.5 flex items-center gap-3">
+    <a href="../" class="text-sm font-semibold text-ink/60 hover:text-ink">← James Consultant</a>
+    <a href="tel:+19026353585" class="ml-auto text-sm font-semibold border border-ink/70 rounded-full px-4 py-1.5 hover:bg-ink hover:text-white transition">+1 902-635-3585</a>
+  </div>
+</header>
+
+<main class="max-w-5xl mx-auto px-5">
+
+  <!-- Intro -->
+  <section class="pt-14 sm:pt-16 max-w-3xl">
+    <h1 class="font-display text-4xl sm:text-[3.2rem] font-semibold leading-[1.08]">Study Notes</h1>
+    <p class="text-ink/65 mt-5 text-base sm:text-lg leading-relaxed">Code sheets and references from my courses in the NSCC Artificial Intelligence program. I keep them here so they open in one tap — before a lab, during an assignment, or five minutes ahead of a tech check.</p>
+  </section>
+
+  <!-- Notes list -->
+  <section class="mt-12">
+    <div class="divide-y divide-ink/10 border-y border-ink/10">
+      <div class="rowlink flex items-start gap-4 px-3 sm:px-4 py-5">
+        <span class="font-mono text-[11px] font-semibold bg-ink text-white px-2 py-1 rounded mt-1 shrink-0">HTML</span>
+        <div class="flex-1">
+          <a href="scikit-learn-code-dictionary.html" class="font-display font-semibold text-lg hover:text-brass-dark">Scikit-Learn Code Dictionary</a>
+          <p class="text-sm text-ink/65 mt-1 leading-relaxed">All 45 code blocks from the machine-learning course material (PROG 5155), organized by topic with search and one-click copy. Written in Korean.</p>
+        </div>
+        <a href="Scikit_Learn_Code_Dictionary.zip" class="font-mono text-[11px] font-semibold border border-ink/50 px-2 py-1 rounded mt-1 shrink-0 hover:bg-ink hover:text-white transition">ZIP ↓</a>
+      </div>
+      <a href="dbas5115-sheet.html" class="rowlink flex items-start gap-4 px-3 sm:px-4 py-5">
+        <span class="font-mono text-[11px] font-semibold bg-ink text-white px-2 py-1 rounded mt-1 shrink-0">HTML</span>
+        <div class="flex-1">
+          <h3 class="font-display font-semibold text-lg">DBAS 5115 Code Sheet — Practices 1–9</h3>
+          <p class="text-sm text-ink/65 mt-1 leading-relaxed">Markdown &amp; Git submission, pandas and matplotlib basics, reading CSV, flat files, XML, JSON and API data, web scraping three ways, and PostgreSQL from Python with SQLAlchemy.</p>
+        </div>
+        <span class="text-ink/35 mt-1.5">→</span>
+      </a>
+      <a href="dbas5115-sheet-2.html" class="rowlink flex items-start gap-4 px-3 sm:px-4 py-5">
+        <span class="font-mono text-[11px] font-semibold bg-ink text-white px-2 py-1 rounded mt-1 shrink-0">HTML</span>
+        <div class="flex-1">
+          <h3 class="font-display font-semibold text-lg">DBAS 5115 Code Sheet 2 — DDL, DML &amp; Tech Check 2</h3>
+          <p class="text-sm text-ink/65 mt-1 leading-relaxed">Exercise 10: CREATE, ALTER and DROP for a five-table ERD, with the troubleshooting notes from actually running it. Plus the Tech Check 2 patterns — INSERT, UPDATE, DELETE, JOINs and aggregation, and the Jupyter + pandas + matplotlib workflow.</p>
+        </div>
+        <span class="text-ink/35 mt-1.5">→</span>
+      </a>
+    </div>
+    <p class="text-sm text-ink/50 mt-6">More sheets land here as each course wraps up.</p>
+  </section>
+
+  <p class="text-ink/40 text-xs mt-14 pb-14">James Consultant · Study Notes · Halifax, Nova Scotia, Canada</p>
+</main>
+</body>
+</html>
