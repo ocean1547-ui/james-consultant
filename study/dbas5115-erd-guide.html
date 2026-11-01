@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DBAS 5115 Assignment 1 — ERD Code &amp; Guide | Study Notes — James Consultant</title>
+<meta name="description" content="DBAS 5115 Assignment 1 ERD guide for the Acme Medical Clinic database: one-minute dbdiagram.io instructions and the full DBML code for all eight tables and their relationships.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: { extend: {
+    colors: { ink:'#16262F', pine:'#1E3A34', paper:'#FAF8F3', mist:'#EFEAE0', brass:{ DEFAULT:'#A87C2A', dark:'#8A641F' } },
+    fontFamily: { display:['Fraunces','Georgia','serif'], sans:['Inter','system-ui','sans-serif'] }
+  } }
+}
+</script>
+<style>
+  body{-webkit-tap-highlight-color:transparent}
+  .sheet{font-size:15.5px;line-height:1.75;color:#16262F}
+  .sheet h1{font-family:Fraunces,Georgia,serif;font-size:1.9rem;font-weight:600;line-height:1.25;margin:0 0 1.2rem}
+  .sheet h2{font-family:Fraunces,Georgia,serif;font-size:1.4rem;font-weight:600;line-height:1.3;margin:2.6rem 0 0.9rem;padding-top:1.6rem;border-top:1px solid rgba(22,38,47,.12)}
+  .sheet h2:first-of-type{border-top:none;padding-top:0}
+  .sheet h3{font-size:1.08rem;font-weight:700;margin:1.9rem 0 0.6rem}
+  .sheet p{margin:0.7rem 0}
+  .sheet ul{list-style:disc;padding-left:1.5rem;margin:0.7rem 0}
+  .sheet ol{list-style:decimal;padding-left:1.5rem;margin:0.7rem 0}
+  .sheet li{margin:0.3rem 0}
+  .sheet li>ul,.sheet li>ol{margin:0.3rem 0}
+  .sheet a{color:#8A641F;font-weight:600;text-decoration:underline;text-decoration-color:rgba(168,124,42,.45);text-underline-offset:3px}
+  .sheet a:hover{text-decoration-color:#A87C2A}
+  .sheet strong{font-weight:700}
+  .sheet hr{border:none;border-top:1px solid rgba(22,38,47,.12);margin:2.2rem 0}
+  .sheet code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.88em;background:#EFEAE0;padding:.12em .35em;border-radius:4px}
+  .sheet pre{background:#16262F;color:#EDEAE2;padding:1rem 1.1rem;border-radius:8px;overflow-x:auto;margin:1rem 0;line-height:1.55}
+  .sheet pre code{background:transparent;padding:0;font-size:.85rem;color:inherit}
+  .sheet table{border-collapse:collapse;width:100%;margin:1rem 0;font-size:.92rem;line-height:1.5}
+  .sheet th,.sheet td{border:1px solid rgba(22,38,47,.18);padding:.45rem .7rem;text-align:left;vertical-align:top}
+  .sheet th{background:#EFEAE0;font-weight:700}
+  .sheet blockquote{border-left:3px solid #A87C2A;padding-left:1rem;margin:1rem 0;color:rgba(22,38,47,.75)}
+  .sheet img{max-width:100%}
+</style>
+</head>
+<body class="bg-paper text-ink font-sans antialiased">
+
+<!-- Header -->
+<header class="bg-paper/95 backdrop-blur border-b border-ink/10 sticky top-0 z-10">
+  <div class="max-w-5xl mx-auto px-5 py-3.5 flex items-center gap-3">
+    <a href="../" class="text-sm font-semibold text-ink/60 hover:text-ink">← James Consultant</a>
+    <a href="./" class="ml-auto text-sm font-semibold border border-ink/70 rounded-full px-4 py-1.5 hover:bg-ink hover:text-white transition">Study Notes</a>
+  </div>
+</header>
+
+<main class="max-w-5xl mx-auto px-5">
+  <article class="sheet max-w-3xl pt-12 pb-4">
+<h1>DBAS 5115 Assignment 1 — ERD Code &amp; Guide</h1>
+<p>이 문서는 Acme Medical Clinic 데이터베이스의 ERD(Entity-Relationship Diagram)를 자동으로 생성하기 위한 코드와 사용 설명서입니다. 아래 코드를 복사하여 dbdiagram.io에 붙여넣기만 하면 완벽한 ERD가 생성됩니다.</p>
+<h2>1. ERD 생성 방법 (1분 완성 가이드)</h2>
+<ol>
+<li><strong>단계 1:</strong> 인터넷 창을 열고 무료 ERD 생성 사이트인 <a href="https://dbdiagram.io/">dbdiagram.io</a> 에 접속한 뒤 "Go to App" 버튼을 누릅니다.</li>
+<li><strong>단계 2:</strong> 화면 왼쪽에 적혀있는 기본 예제 코드를 모두 지우고, 이 문서 아래에 있는 "ERD 생성 코드"를 그대로 복사하여 붙여넣습니다.</li>
+<li><strong>단계 3:</strong> 코드를 붙여넣는 순간 화면 오른쪽에 8개의 테이블(Department, Employee, Patient, Service, Appointment, Appointment_Service, Invoice, Payment)과 그 연결선(1:N, M:N, 재귀적 관계)이 완벽하게 그려진 다이어그램이 나타납니다.</li>
+<li><strong>단계 4:</strong> 화면 상단의 "Export" 버튼(또는 그림 위에 마우스 우클릭)을 눌러 그림을 PNG 파일이나 PDF로 저장합니다. 이후 비디오 녹화 시 이 그림을 띄워놓고 발표(Section 1 스크립트)를 진행하시면 됩니다.</li>
+</ol>
+<h2>2. ERD 생성 코드 (dbdiagram.io 전용 DBML)</h2>
+<p>아래 박스 안의 코드를 처음부터 끝까지 전부 복사하세요.</p>
+<pre><code>Table department {
+  dept_id integer [primary key]
+  dept_name varchar
+  location varchar
+}
+
+Table employee {
+  emp_id integer [primary key]
+  first_name varchar
+  last_name varchar
+  role varchar
+  email varchar
+  phone varchar
+  hire_date date
+  salary numeric
+  dept_id integer
+  supervisor_id integer
+}
+
+Table patient {
+  patient_id integer [primary key]
+  first_name varchar
+  last_name varchar
+  dob date
+  gender varchar
+  blood_type varchar
+  phone varchar
+  email varchar
+  address varchar
+  emergency_contact varchar
+}
+
+Table service {
+  service_id integer [primary key]
+  service_name varchar
+  cost numeric
+}
+
+Table appointment {
+  appt_id integer [primary key]
+  patient_id integer
+  emp_id integer
+  appt_date timestamp
+  status varchar
+  reason text
+}
+
+Table appointment_service {
+  appt_id integer [primary key]
+  service_id integer [primary key]
+  quantity integer
+}
+
+Table invoice {
+  invoice_id integer [primary key]
+  appt_id integer
+  total_amount numeric
+  issue_date date
+}
+
+Table payment {
+  payment_id integer [primary key]
+  invoice_id integer
+  amount_paid numeric
+  payment_date date
+}
+
+Ref: employee.dept_id &gt; department.dept_id
+Ref: employee.supervisor_id &gt; employee.emp_id
+Ref: appointment.patient_id &gt; patient.patient_id
+Ref: appointment.emp_id &gt; employee.emp_id
+Ref: appointment_service.appt_id &gt; appointment.appt_id
+Ref: appointment_service.service_id &gt; service.service_id
+Ref: invoice.appt_id - appointment.appt_id
+Ref: payment.invoice_id &gt; invoice.invoice_id</code></pre>
+  </article>
+  <p class="text-ink/40 text-xs mt-10 pb-14">James Consultant · Study Notes · Halifax, Nova Scotia, Canada</p>
+</main>
+</body>
+</html>
